@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import mainW from "@/components/main-w";
+//import mainW from "@/components/main-w";
 import mainH from "@/components/main-h";
 import nopath from "@/pages/404";
 import "nprogress/nprogress.css";
@@ -21,11 +21,11 @@ var routes = [
     meta: { name: "登录", hidden: true },
     component: () => import("@/pages/login.vue")
   },
-  {
-    path: "/w",
-    meta: { name: "首页", single: true, icon: "fa fa-desktop", p: "admin" },
-    component: mainW
-  },
+  // {
+  //   path: "/w",
+  //   meta: { name: "首页", single: true, icon: "fa fa-desktop", p: "admin" },
+  //   component: mainW
+  // },
   {
     path: "/",
     meta: { name: "首页", single: true, icon: "fa fa-home" },
@@ -33,8 +33,36 @@ var routes = [
   },
   {
     path: "/home",
-    meta: { name: "主页", hidden: true },
-    component: () => import("@/pages/index/index")
+    meta: { name: "观测分析", single: true },
+    component: mainH,
+    children: [
+      {
+        path: "/home",
+        component: () => import("@/pages/analysis/index")
+      }
+    ]
+  },
+  {
+    path: "/home1",
+    meta: { name: "监测预警", single: true },
+    component: mainH,
+    children: [
+      {
+        path: "/home1",
+        component: () => import("@/pages/warning/index")
+      }
+    ]
+  },
+  {
+    path: "/home2",
+    meta: { name: "质量评估", single: true },
+    component: mainH,
+    children: [
+      {
+        path: "/home2",
+        component: () => import("@/pages/assessment/index")
+      }
+    ]
   },
   {
     path: "/user",

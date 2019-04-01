@@ -1,10 +1,10 @@
 <template>
   <el-container class="container-body">
     <el-container class="container-div">
-      <side-menu></side-menu>
       <el-container class="container-view">
         <el-header class="breadcrumb-view">
-          <breadcrumb-menu></breadcrumb-menu>
+          <side-menu></side-menu>
+          <!-- <breadcrumb-menu></breadcrumb-menu> -->
         </el-header>
         <el-main class="main-view">
           <router-view></router-view>
@@ -17,17 +17,16 @@
   </el-container>
 </template>
 <script>
-import breadcrumbMenu from "./index/breadcrumb";
+//import breadcrumbMenu from "./index/breadcrumb";
 import sideMenu from "./index/side";
 import footerMenu from "./index/footer";
 export default {
-  components: { breadcrumbMenu, sideMenu, footerMenu },
+  //components: { breadcrumbMenu, sideMenu, footerMenu },
+  components: { sideMenu, footerMenu },
   data() {
     return {};
   },
-  created() {
-   
-  },
+  created() {}
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -37,12 +36,11 @@ export default {
 container-view {
   margin: 0px;
   padding: 0px;
-  text-align: left;
 }
 .container-div {
   min-height: 600px;
 }
 .breadcrumb-view {
-  margin: 20px;
+  background-color: #0984c8;
 }
 </style>
