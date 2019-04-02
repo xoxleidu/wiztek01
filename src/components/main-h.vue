@@ -31,9 +31,11 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-.container-body,
-.container-div,
-container-view {
+.el-container,
+.el-aside,
+.el-main,
+.el-header,
+.el-footer {
   margin: 0px;
   padding: 0px;
 }

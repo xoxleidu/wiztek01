@@ -8,8 +8,8 @@ export default {};
 .footer-view {
   text-align: center;
   background-color: #f8f8f8;
-  height: 60px;
-  line-height: 60px;
+  height: 20px;
+  line-height: 20px;
   font-size: 12px;
 }
 </style>

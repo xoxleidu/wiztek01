@@ -16,9 +16,10 @@ export default {
     "微软雅黑";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #555;
+  color: #fff;
   margin: 0px;
   padding: 0px;
+  border: none;
   list-style-type: none;
 }
 a {

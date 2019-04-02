@@ -58,16 +58,19 @@ export default {
 .el-menu-vertical-side div {
   float: left;
 }
-.collapse-view i {
-  color: #555;
-  font-size: 24px;
+.el-menu-vertical-side span {
+  color: #FFF;
 }
-.collapse-view button {
+.el-menu-vertical-side i {
+  color: #FFF;
+  font-size: 18px;
+}
+.el-menu-vertical-side button {
   background: none !important;
   border: none;
   margin-top: 10px !important;
 }
-.collapse-view button :hover {
+.el-menu-vertical-side button :hover {
   background: none !important;
 }
 </style>
