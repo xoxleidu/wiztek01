@@ -6892,11 +6892,6 @@ vue-template-es2015-compiler@^1.6.0:
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.8.1.tgz#e2ec4f42d16b6c712e61899c6b20bcdb1df128ca"
   integrity sha1-4uxPQtFrbHEuYYmcayC82x3xKMo=
 
-vue2-leaflet@^2.0.2:
-  version "2.0.2"
-  resolved "http://registry.npm.taobao.org/vue2-leaflet/download/vue2-leaflet-2.0.2.tgz#ba70e5c11db5ad5dccc82002bd4df7f0cde3f605"
-  integrity sha1-unDlwR21rV3MyCACvU338M3j9gU=
-
 vue@^2.5.2:
   version "2.5.21"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.5.21.tgz#3d33dcd03bb813912ce894a8303ab553699c4a85"

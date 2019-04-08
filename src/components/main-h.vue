@@ -1,19 +1,12 @@
 <template>
-  <el-container class="container-body">
-    <el-container class="container-div">
-      <el-container class="container-view">
-        <el-header class="breadcrumb-view">
-          <side-menu></side-menu>
-          <!-- <breadcrumb-menu></breadcrumb-menu> -->
-        </el-header>
-        <el-main class="main-view">
-          <router-view></router-view>
-        </el-main>
-      </el-container>
-    </el-container>
-    <el-footer>
-      <footer-menu></footer-menu>
-    </el-footer>
+  <el-container>
+    <el-header>
+      <side-menu></side-menu>
+    </el-header>
+
+    <el-main :style="{height:mapHeight+'px'}">
+      <router-view></router-view>
+    </el-main>
   </el-container>
 </template>
 <script>
@@ -24,25 +17,37 @@ export default {
   //components: { breadcrumbMenu, sideMenu, footerMenu },
   components: { sideMenu, footerMenu },
   data() {
-    return {};
+    return {
+      clientHeight: "",
+      mapHeight: ""
+    };
   },
-  created() {}
+  created() {
+    // 获取浏览器可视区域高度
+    this.clientHeight = document.documentElement.clientHeight;
+    this.mapHeight = this.clientHeight - 60;
+    console.log(localStorage)
+  },
+  mounted() {
+    
+  },
+  watch: {
+    // 如果 `clientHeight` 发生改变，这个函数就会运行
+  }
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style lang="less" scoped>
+@import url("../style/style");
 .el-container,
-.el-aside,
 .el-main,
-.el-header,
-.el-footer {
+.el-header {
   margin: 0px;
   padding: 0px;
+  
 }
-.container-div {
-  min-height: 600px;
+.el-container {
+  height: clientHeight;
 }
-.breadcrumb-view {
-  background-color: #0984c8;
-}
+
 </style>

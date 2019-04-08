@@ -10,20 +10,17 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+@import url("./style/style");
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif, "Microsoft YaHei",
     "微软雅黑";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #fff;
+  color: @baseFontColor;
   margin: 0px;
   padding: 0px;
   border: none;
   list-style-type: none;
-}
-a {
-  color: #007acc;
-  text-decoration: none;
 }
 </style>

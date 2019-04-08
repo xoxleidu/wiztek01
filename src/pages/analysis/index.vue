@@ -1,13 +1,16 @@
 <template>
-  <el-container class="container-body">
-    <el-aside class="leftbg" v-if="isCollapse">
-      <div class="analysis-left-div">
-        <el-row class="title-row">
+  <div class="main_div">
+    <!-- <div class="map-div">
+    </div>-->
+
+    <div class="left_bg" v-show="isCollapseL">
+      <div class="analysis_left_div">
+        <el-row class="title_row">
           <el-col :span="24">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>数据类型
           </el-col>
         </el-row>
-        <el-row class="button-row" type="flex" justify="start">
+        <el-row class="button_row" type="flex" justify="space-between">
           <el-col :span="6">
             <el-button size="mini">原始数据</el-button>
           </el-col>
@@ -18,12 +21,12 @@
             <el-button size="mini">校正数据</el-button>
           </el-col>
         </el-row>
-        <el-row class="title-row">
+        <el-row class="title_row">
           <el-col :span="24">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>时间类型
           </el-col>
         </el-row>
-        <el-row class="button-row" type="flex" justify="start">
+        <el-row class="button_row" type="flex" justify="space-between">
           <el-col :span="7">
             <el-button size="mini">逐小时数据</el-button>
           </el-col>
@@ -31,12 +34,12 @@
             <el-button size="mini">逐3小时数据</el-button>
           </el-col>
         </el-row>
-        <el-row class="title-row">
+        <el-row class="title_row">
           <el-col :span="24">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>站点范围
           </el-col>
         </el-row>
-        <el-row class="button-row" type="flex" justify="start">
+        <el-row class="button_row" type="flex" justify="space-between">
           <el-col :span="5">
             <el-button size="mini">国家站</el-button>
           </el-col>
@@ -44,12 +47,12 @@
             <el-button size="mini">基准站</el-button>
           </el-col>
         </el-row>
-        <el-row class="title-row">
+        <el-row class="title_row">
           <el-col :span="24">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>统计要素
           </el-col>
         </el-row>
-        <el-row class="button-row" type="flex" justify="start">
+        <el-row class="button_row" type="flex" justify="space-between">
           <el-col :span="4">
             <el-button size="mini">沙尘</el-button>
           </el-col>
@@ -60,12 +63,12 @@
             <el-button size="mini">风速</el-button>
           </el-col>
         </el-row>
-        <el-row class="title-row">
+        <el-row class="title_row">
           <el-col :span="24">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>时间范围
           </el-col>
         </el-row>
-        <el-row class="button-row" type="flex" justify="start">
+        <el-row class="button_row" type="flex" justify="space-between">
           <el-col :span="7">
             <el-button size="mini">前1年同期</el-button>
           </el-col>
@@ -76,7 +79,7 @@
             <el-button size="mini">前3年同期</el-button>
           </el-col>
         </el-row>
-        <el-row class="button-row" type="flex" justify="start">
+        <el-row class="button_row" type="flex" justify="space-between">
           <el-col :span="7">
             <el-button size="mini">前4年同期</el-button>
           </el-col>
@@ -99,7 +102,7 @@
                 <el-row type="flex" justify="center" align="middle">
                   <el-col :span="4">战点:</el-col>
                   <el-col :span="10">
-                    <dict-select v-model="dictChoose" :dict="$dict.PAY_MODE" class="mini-select"></dict-select>
+                    <dict-select v-model="dictChoose" :dict="$dict.PAY_MODE" class="mini_select"></dict-select>
                   </el-col>
                   <el-col :span="5">
                     <el-button size="mini" @click="add">添加</el-button>
@@ -110,7 +113,7 @@
                 </el-row>
                 <el-row>
                   <el-col :span="24">
-                    <el-input placeholder="请输入内容" class="site-search">
+                    <el-input placeholder="请输入内容" class="site_search">
                       <el-button slot="append">搜索</el-button>
                     </el-input>
                   </el-col>
@@ -119,7 +122,7 @@
                   <el-col :span="24">站点列表</el-col>
                 </el-row>
                 <el-row>
-                  <el-col :span="24" class="site-list-box">
+                  <el-col :span="24" class="site_list_box">
                     <!-- <el-tag
                       v-for="tag in tags"
                       :key="tag.name"
@@ -153,28 +156,58 @@
           </el-col>
         </el-row>-->
       </div>
-    </el-aside>
-    <el-main>
-      <div class="show-hidden-bar-div">
+    </div>
+    <div :class="[isCollapseL ? showBarL : hiddenBarL ]">
+      <div v-if="isCollapseL">
         <el-button
           type="primary"
           icon="fa fa-chevron-left"
-          class="show-hidden-bar-button"
-          @click="falseCollapse"
+          class="show_hidden_bar_button"
+          @click="falseCollapseL"
         ></el-button>
       </div>
-      <div id="map"></div>
-      <!-- <div class="vue-leaflet">
+      <div v-else>
+        <el-button
+          type="primary"
+          icon="fa fa-chevron-right"
+          class="show_hidden_bar_button"
+          @click="falseCollapseL"
+        ></el-button>
+      </div>
+    </div>
+
+    <div id="map" class="map"></div>
+
+    <!-- <div class="testc">111</div> -->
+
+    <!-- <div class="vue-leaflet">
         <l-map style="width: 100%; height: 600px;" :zoom="zoom" :center="center">
           <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
           <l-marker :lat-lng="marker">
             <l-popup :content="text"></l-popup>
           </l-marker>
         </l-map>
-      </div>-->
-    </el-main>
-    <el-aside class="rigbg" v-if="false">right</el-aside>
-  </el-container>
+    </div>-->
+    <div :class="[isCollapseR ? showBarR : hiddenBarR ]">
+      <div v-if="isCollapseR">
+        <el-button
+          type="primary"
+          icon="fa fa-chevron-right"
+          class="show_hidden_bar_button"
+          @click="falseCollapseR"
+        ></el-button>
+      </div>
+      <div v-else>
+        <el-button
+          type="primary"
+          icon="fa fa-chevron-left"
+          class="show_hidden_bar_button"
+          @click="falseCollapseR"
+        ></el-button>
+      </div>
+    </div>
+    <div class="right_bg" v-show="isCollapseR">right</div>
+  </div>
 </template>
 <script>
 import onedateSelect from "@/components/select/onedate-select";
@@ -195,7 +228,12 @@ export default {
       // text: 'this is a marker',
 
       //
-      isCollapse: true,
+      isCollapseL: true,
+      isCollapseR: false,
+      showBarL: "show_bar_left",
+      hiddenBarL: "hidden_bar_left",
+      showBarR: "show_bar_right",
+      hiddenBarR: "hidden_bar_right",
       startDateSelect: "",
       dictChoose: "",
       map: {}
@@ -219,13 +257,26 @@ export default {
       })
       .addTo(this.map);
   },
-  created() {},
+  created() {
+    //this.map.reload;
+  },
   methods: {
-    falseCollapse() {
-      if (this.isCollapse) {
-        this.isCollapse = false;
+    falseCollapseL() {
+      //console.log(this)
+      //this.isCollapse = this.isCollapse;
+      if (this.isCollapseL) {
+        this.isCollapseL = false;
       } else {
-        this.isCollapse = true;
+        this.isCollapseL = true;
+      }
+    },
+    falseCollapseR() {
+      //console.log(this)
+      //this.isCollapse = this.isCollapse;
+      if (this.isCollapseR) {
+        this.isCollapseR = false;
+      } else {
+        this.isCollapseR = true;
       }
     },
     add() {
@@ -237,70 +288,150 @@ export default {
 </script>
 
 <style lang="less">
-#map {
-  height: 100%;
+@import url("../../style/style.less");
+.testcolor {
+  background-color: @baseBgColorDark / 2;
 }
 /**
 整体
 */
-.el-container {
-  .el-main {
-    padding: 0px;
-    margin: 0px;
-    position: relative;
-    .show-hidden-bar-div {
-      position: absolute;
-      top: 50%;
-      left: 0px;
-      z-index: 1000;
-      .show-hidden-bar-button {
-        background: none;
-        border: none;
-        i {
-          color: #5f9ed1;
-          font-size: 30px;
-        }
-      }
-      .show-hidden-bar-button {
-        background: none;
-        border: none;
-        i {
-          color: #005590;
-          font-size: 30px;
+.main_div {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+
+  /**
+  左边导航栏
+  */
+
+  .left_bg {
+    flex: 0 0 @baseLeftWidth;
+    height: 100%;
+    background-color: @baseBgColorDark;
+    .title_row {
+      padding: 5px 10px;
+    }
+    .button_row {
+      padding: 0px 10px;
+      div {
+        width: 100%;
+        .el-button {
+          padding: 5px;
+          width: 100%;
         }
       }
     }
+    .el-row {
+      height: 35px;
+      line-height: 16px;
+      font-size: 10px;
+    }
+  }
+
+  /**
+  右边导航
+  */
+
+  .right_bg {
+    flex: 0 0 @baseLeftWidth;
+    background-color: @baseBgColorDark;
+  }
+
+  /**
+  隐藏按钮
+  */
+  .show_hidden_base {
+    position: absolute;
+    top: 50%;
+    z-index: 1000;
+  }
+  /** 左*/
+  .show_bar_left {
+    .show_hidden_base;
+    left: @baseLeftWidth;
+  }
+  .hidden_bar_left {
+    .show_hidden_base;
+    left: 0px;
+  }
+  /** 右*/
+  .show_bar_right {
+    .show_hidden_base;
+    right: @baseLeftWidth;
+  }
+  .hidden_bar_right {
+    .show_hidden_base;
+    right: 0px;
+  }
+  .show_hidden_bar_button {
+    background: none;
+    border: none;
+    i {
+      color: @baseBgColorLight;
+      font-size: 30px;
+    }
+    &:hover {
+      background: none;
+      border: none;
+      i {
+        color: @baseBgColorDark;
+        font-size: 30px;
+      }
+    }
+  }
+
+  /**
+  地图层
+  */
+  .map {
+    flex: 1;
+    widows: 100%;
+    height: 100%;
   }
 }
 
 /**
-左边导航栏
-*/
-.leftbg {
-  width: 230px;
-  background-color: #005590;
-  .title-row {
-    padding: 5px 10px;
-  }
-  .button-row {
-    padding: 0px 10px;
-  }
-  .el-row {
-    height: 35px;
-    line-height: 16px;
-    font-size: 10px;
-  }
-}
-/**
 省站选项卡
 */
+.el-tabs--border-card {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: @baseBgColorBox !important;
+}
 .el-tabs {
-  background-color: #78b1de;
+  background-color: @baseBgColorBox;
+  border: none;
+  margin: 10px;
+  box-shadow: none;
+  .el-tabs__header {
+    background-color: @baseBgColorDark;
+    border: none;
+    .is-top {
+      background-color: none;
+      border: none;
+      color: @baseFontColorWhite;
+      .el-tabs__item {
+        background-color: @baseBgColorLight;
+        &:hover {
+          //background-color: @baseBgColorBox;
+          color: @baseFontColorWhite;
+        }
+      }
+      .is-active {
+        background-color: @baseBgColorBox;
+        color: @baseFontColorWhite;
+        &:hover {
+        }
+      }
+    }
+  }
+  //内容部分
   .el-row {
     height: 40px;
     line-height: 16px;
-    .site-list-box {
-      background-color: #5f9ed1;
+    .site_list_box {
+      background-color: @baseBgColorLight;
       padding: 10px;
       margin-top: -10px;
       .el-button {
@@ -309,42 +440,36 @@ export default {
         padding: 3px;
       }
     }
-  }
-}
-/**
-右边导航栏
-*/
-.rigbg {
-  background-color: #005590;
-}
-/**
-下拉框
-*/
-.mini-select {
-  .el-input__inner {
-    height: 28px;
-    font-size: 10px;
-    box-shadow: 1px;
-    border: none;
-    background-color: #5f9ed1;
-    color: #fff;
-    .el-input__suffix {
-      color: #fff;
-      background-color: #fff;
+    /**
+    下拉框
+    */
+    .mini_select {
+      .el-input__inner {
+        height: 28px;
+        font-size: 10px;
+        box-shadow: 1px;
+        border: none;
+        background-color: @baseBgColorLight;
+        color: @baseFontColorWhite;
+        .el-input__suffix {
+          color: @baseFontColorWhite;
+          background-color: @baseBgColorWhite;
+        }
+      }
     }
-  }
-}
-/**
-搜索框
-*/
-.site-search {
-  .el-input__inner {
-    height: 28px;
-    font-size: 10px;
-    box-shadow: 1px;
-    border: none;
-    background-color: #5f9ed1;
-    color: #fff;
+    /**
+    搜索框
+    */
+    .site_search {
+      .el-input__inner {
+        height: 28px;
+        font-size: 10px;
+        box-shadow: 1px;
+        border: none;
+        background-color: @baseBgColorLight;
+        color: @baseFontColorWhite;
+      }
+    }
   }
 }
 </style>

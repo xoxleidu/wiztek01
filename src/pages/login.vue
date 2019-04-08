@@ -35,7 +35,7 @@
 }
 </style>
 <script>
-import { login, getUserList } from "@/api/user";
+import { login } from "@/api/index";
 import "@/utils/md5.js";
 export default {
   data() {
@@ -55,10 +55,13 @@ export default {
           var postData = Object.assign({}, this.formData);
           postData.passWord = postData.passWord.MD5(16);
           this.loading = true;
+
+          
           login(postData)
             .then(res => {
               this.loading = false;
-              if (res.data.code == 0) {
+              console.log("then " + res)
+              if (res.data.code == "0") {
                 this.$message.success("登陆成功！");
                 this.$store.commit(
                   "loginIn",
@@ -75,7 +78,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              console.log("err "+err);
               this.loading = false;
               this.$message.error("接口错误");
             });

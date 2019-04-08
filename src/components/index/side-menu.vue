@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="menu_style">
     <div v-for="r in routers" :key="r.path">
       <div v-if="r.meta.single">
         <el-menu-item :index="r.path">
@@ -38,6 +38,29 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="less" scoped>
+@import url("../../style/style");
+.menu_style {
+  div {
+    float: left;
+    li {
+    height: 60px;
 
+    }
+    i {
+      color: @baseFontColorWhite;
+      font-size: @baseFontSizeHeader;
+    }
+    span {
+      color: @baseFontColorWhite;
+    }
+    :hover {
+      background-color: @baseBgColorDark;
+    }
+    .is-active {
+      background-color: @baseBgColorDark;
+      //border-bottom: 2px solid #FFF;
+    }
+  }
+}
 </style>

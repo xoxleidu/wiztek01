@@ -1,4 +1,5 @@
 import XLSX from "xlsx";
+
 export default {
   exportExcel({ data, sheetName, fileName }) {
     var ws = XLSX.utils.json_to_sheet(data, { skipHeader: true });

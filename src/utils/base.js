@@ -1,6 +1,6 @@
-var BASE_URL = "http://192.168.88.6:5000/";
-var IMAGEL_URL = "https://jsonplaceholder.typicode.com/posts/";
+var BASE_URL = "http://localhost:8070/";
 var API_URL = "http://yapi.demo.qunar.com/mock/40712";
+var IMAGEL_URL = "https://jsonplaceholder.typicode.com/posts/";
 
 var BASE_TABLE_PAGE = 1;
 var BASE_TABLE_SIZE = 10;

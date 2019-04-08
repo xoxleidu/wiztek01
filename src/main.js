@@ -10,7 +10,7 @@ import "font-awesome/css/font-awesome.min.css";
 import { utils, dict } from "@/utils/base";
 import rules from "@/utils/rules";
 //import 'leaflet/dist/leaflet.css'
-import '@/leaflet/leaflet.css'
+import '../static/leaflet/leaflet.css'
 
 Vue.use(ElementUI);
 
