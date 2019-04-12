@@ -7,20 +7,34 @@
       <div class="analysis_left_div">
         <el-row class="title_row">
           <el-col :span="24">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>数据类型
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>统计要素
           </el-col>
         </el-row>
         <el-row class="button_row" type="flex" justify="space-between">
-          <el-col :span="6">
-            <el-button size="mini">原始数据</el-button>
-          </el-col>
-          <el-col :span="4">
-            <el-button size="mini">年鉴</el-button>
-          </el-col>
-          <el-col :span="6">
-            <el-button size="mini">校正数据</el-button>
+          <el-col :span="24">
+            <el-radio-group v-model="StatisticElement" size="small">
+              <el-radio-button label="0">沙尘</el-radio-button>
+              <el-radio-button label="1">能见度</el-radio-button>
+              <el-radio-button label="2">风速</el-radio-button>
+            </el-radio-group>
           </el-col>
         </el-row>
+        <div v-show="StatisticElement==0? true:false">
+          <el-row class="title_row">
+            <el-col :span="24">
+              <i class="fa fa-chevron-right" aria-hidden="true"></i>数据类型
+            </el-col>
+          </el-row>
+          <el-row class="button_row" type="flex" justify="space-between">
+            <el-col :span="24">
+              <el-radio-group v-model="sjly" size="small">
+                <el-radio-button label="0">原始数据</el-radio-button>
+                <el-radio-button label="1">年鉴</el-radio-button>
+                <el-radio-button label="2">校正数据</el-radio-button>
+              </el-radio-group>
+            </el-col>
+          </el-row>
+        </div>
         <el-row class="title_row">
           <el-col :span="24">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>时间类型
@@ -47,22 +61,7 @@
             <el-button size="mini">基准站</el-button>
           </el-col>
         </el-row>
-        <el-row class="title_row">
-          <el-col :span="24">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>统计要素
-          </el-col>
-        </el-row>
-        <el-row class="button_row" type="flex" justify="space-between">
-          <el-col :span="4">
-            <el-button size="mini">沙尘</el-button>
-          </el-col>
-          <el-col :span="5">
-            <el-button size="mini">能见度</el-button>
-          </el-col>
-          <el-col :span="4">
-            <el-button size="mini">风速</el-button>
-          </el-col>
-        </el-row>
+
         <el-row class="title_row">
           <el-col :span="24">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>时间范围
@@ -91,8 +90,10 @@
           </el-col>
         </el-row>
 
-        <el-row>
-          <el-col :span="24"></el-col>
+        <el-row class="button_row" type="flex" justify="space-between">
+          <el-col :span="24">
+            <datetodate-select></datetodate-select>
+          </el-col>
         </el-row>
 
         <el-row :gutter="0">
@@ -102,7 +103,9 @@
                 <el-row type="flex" justify="center" align="middle">
                   <el-col :span="4">战点:</el-col>
                   <el-col :span="10">
-                    <dict-select v-model="dictChoose" :dict="$dict.PAY_MODE" class="mini_select"></dict-select>
+                    <site-select 
+                    v-model="dictChoose"
+                    class="mini_select"></site-select>
                   </el-col>
                   <el-col :span="5">
                     <el-button size="mini" @click="add">添加</el-button>
@@ -210,13 +213,13 @@
   </div>
 </template>
 <script>
-import onedateSelect from "@/components/select/onedate-select";
-import dictSelect from "@/components/select/dict-select";
+import datetodateSelect from "@/components/select/datetodate-select";
+import siteSelect from "@/components/select/site-select";
 //import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
 import lmap from "leaflet";
 
 export default {
-  components: { onedateSelect, dictSelect },
+  components: { datetodateSelect, siteSelect },
   data() {
     return {
       //leaflet
@@ -234,8 +237,11 @@ export default {
       hiddenBarL: "hidden_bar_left",
       showBarR: "show_bar_right",
       hiddenBarR: "hidden_bar_right",
-      startDateSelect: "",
       dictChoose: "",
+      primary: "",
+      StatisticElement: 0,
+      sjly: 0,
+      isSjly: true,
       map: {}
     };
   },
@@ -260,6 +266,14 @@ export default {
   created() {
     //this.map.reload;
   },
+  watch: {
+    StatisticElement() {
+      console.log(this.StatisticElement);
+    },
+    sjly() {
+      console.log(this.sjly);
+    }
+  },
   methods: {
     falseCollapseL() {
       //console.log(this)
@@ -282,6 +296,13 @@ export default {
     add() {
       console.log(this.startDateSelect);
       console.log(this.dictChoose);
+    },
+    shachen() {
+      console.log(this.StatisticElement);
+    },
+    nengjiandu(e) {
+      console.log(e);
+      //e.defaultPrevented = true
     }
   }
 };
@@ -316,6 +337,18 @@ export default {
       padding: 0px 10px;
       div {
         width: 100%;
+        .el-radio-group {
+          width: 100%;
+          display: flex;
+          .el-radio-button {
+            flex: 100%;
+            span {
+              width: 100%;
+              padding: 5px;
+              font-size: 12px;
+            }
+          }
+        }
         .el-button {
           padding: 5px;
           width: 100%;

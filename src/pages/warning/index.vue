@@ -1,72 +1,85 @@
 <template>
-  <div class="map-div">
-    <div class="left" v-show="isccc"></div>
-    <div :class="[isccc ? butt1 : butt2 ]" @click="isddd">1</div>
-    <div id="map" class="main"></div>
+  <div class="main_div">
+    <!-- 左侧面板 -->
+    <div class="left_bg" v-show="isCollapseL">
+      <div class="panel">
+        <crudPanel v-model="crudData"></crudPanel>
+      </div>
+    </div>
+    <!-- 左侧面板 -->
+    <!-- 左侧隐藏按钮 -->
+    <div :class="[isCollapseL ? showBarL : hiddenBarL ]">
+      <div v-if="isCollapseL">
+        <el-button
+          type="primary"
+          icon="fa fa-chevron-left"
+          class="show_hidden_bar_button"
+          @click="falseCollapseL"
+        ></el-button>
+      </div>
+      <div v-else>
+        <el-button
+          type="primary"
+          icon="fa fa-chevron-right"
+          class="show_hidden_bar_button"
+          @click="falseCollapseL"
+        ></el-button>
+      </div>
+    </div>
+    <!-- 左侧隐藏按钮 -->
+
+    <div id="map" class="map"></div>
+
+    <!-- 右侧隐藏按钮 -->
+    <div :class="[isCollapseR ? showBarR : hiddenBarR ]">
+      <div v-if="isCollapseR">
+        <el-button
+          type="primary"
+          icon="fa fa-chevron-right"
+          class="show_hidden_bar_button"
+          @click="falseCollapseR"
+        ></el-button>
+      </div>
+      <div v-else>
+        <el-button
+          type="primary"
+          icon="fa fa-chevron-left"
+          class="show_hidden_bar_button"
+          @click="falseCollapseR"
+        ></el-button>
+      </div>
+    </div>
+    <!-- 右侧隐藏按钮 -->
+    <!-- 右侧面板 -->
+    <div class="right_bg" v-show="isCollapseR">
+      <proPanel></proPanel>
+    </div>
+    <!-- 右侧面板 -->
   </div>
 </template>
-<style lang="less">
-@import url("../../style/style");
-.map-div {
-  position: relative;
-  widows: 100%;
-  height: 100%;
-  display: flex;
-  .left {
-    flex: 0 0 @baseLeftWidth;
-    background-color: #424242;
-    min-height: 100%;
-  }
-  .butt {
-      z-index: 1100;
-      position: absolute;
-      top:50%;
-      left: @baseLeftWidth;
-      width: 20px;
-      height: 20px;
-      background-color: aquamarine;
-  }
-  .buttone {
-      z-index: 1100;
-      position: absolute;
-      top:50%;
-      left: 0px;
-      width: 20px;
-      height: 20px;
-      background-color: aquamarine;
-  }
-  .main {
-    flex: 1;
-    widows: 100%;
-    height: 100%;
-  }
-}
-
-#map {
-}
-</style>
-
 <script>
 import lmap from "leaflet";
+import crudPanel from "@/components/panel/crudPanel";
+import proPanel from "@/components/panel/proPanel";
 export default {
+  components: { crudPanel, proPanel },
   data() {
     return {
-        isccc:true,
-        butt1:"butt",
-        butt2:"buttone"
+      //隐藏按钮数据
+      isCollapseL: false,
+      isCollapseR: false,
+      showBarL: "show_bar_left",
+      hiddenBarL: "hidden_bar_left",
+      showBarR: "show_bar_right",
+      hiddenBarR: "hidden_bar_right",
+      //地图数据
+      map: {},
+      //
+      crudData: ""
     };
   },
-  methods: {
-    isddd() {
-        if (this.isccc) {
-        this.isccc = false;
-        
-      } else {
-        this.isccc = true;
-      }
-    }
-  },
   mounted() {
+    //地图初始化
     this.map = lmap
       .map("map", {
         fadeAnimation: false
@@ -83,6 +96,127 @@ export default {
         subdomains: ["01", "02", "03", "04"]
       })
       .addTo(this.map);
+
+    this.isCollapseL = true;
+  },
+  created() {},
+  //监听数据变化
+  watch: {
+    crudData(v) {
+      if (!!v.length) {
+        this.isCollapseR = true;
+      } else {
+        this.isCollapseR = false;
+      }
+    }
+  },
+  methods: {
+    falseCollapseL() {
+      //console.log(this)
+      //this.isCollapse = this.isCollapse;
+      if (this.isCollapseL) {
+        this.isCollapseL = false;
+      } else {
+        this.isCollapseL = true;
+      }
+    },
+    falseCollapseR() {
+      //console.log(this)
+      //this.isCollapse = this.isCollapse;
+      if (this.isCollapseR) {
+        this.isCollapseR = false;
+      } else {
+        this.isCollapseR = true;
+      }
+    }
   }
 };
 </script>
+
+<style lang="less">
+@import url("../../style/style.less");
+
+/**
+整体
+*/
+.main_div {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+
+  /**
+  左边导航栏
+  */
+
+  .left_bg {
+    flex: 0 0 @baseLeftWidth;
+    height: 100%;
+    background-color: @baseBgColorDark;
+  }
+  /**
+  右边导航
+  */
+
+  .right_bg {
+    flex: 0 0 @baseLeftWidth;
+    background-color: @baseBgColorDark;
+  }
+
+  /**
+  隐藏按钮
+  */
+  .show_hidden_base {
+    position: absolute;
+    top: 50%;
+    z-index: 1000;
+  }
+  /** 左*/
+  .show_bar_left {
+    .show_hidden_base;
+    left: @baseLeftWidth;
+  }
+  .hidden_bar_left {
+    .show_hidden_base;
+    left: 0px;
+  }
+  /** 右*/
+  .show_bar_right {
+    .show_hidden_base;
+    right: @baseLeftWidth;
+  }
+  .hidden_bar_right {
+    .show_hidden_base;
+    right: 0px;
+  }
+  .show_hidden_bar_button {
+    background: none;
+    border: none;
+    i {
+      color: @baseBgColorLight;
+      font-size: 30px;
+    }
+    &:hover {
+      background: none;
+      border: none;
+      i {
+        color: @baseBgColorDark;
+        font-size: 30px;
+      }
+    }
+  }
+
+  /**
+  地图层
+  */
+  .map {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/**
+选项卡
+*/
+</style>

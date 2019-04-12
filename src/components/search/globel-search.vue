@@ -26,13 +26,15 @@ export default {
       //v-on:click="onSearch"
       //father//v-on:onSearchSon="onSearchSon"//function onSearchSon(){}
 
-      //链接后台获取数据
-      searchGlobal(this.selected)
+      //链接后台获取数据get
+      searchGlobal({ testData: this.selected, num: 12 })
         .then(res => {
-          console.log(res);
-          searchAdd(this.selected)
+          console.log(res.data);
+          //链接后台获取数据post
+          searchAdd({ username: this.selected, password: "" })
             .then(res => {
-              console.log(res);
+              console.log(res.data.username);
+              console.log(typeof res.data);
             })
             .catch(err => {
               console.log(err);

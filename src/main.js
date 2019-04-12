@@ -5,15 +5,16 @@ import App from "./App";
 import router from "./router";
 import store from "./store";
 import ElementUI from "element-ui";
+import bus from "@/utils/bus"
 import "element-ui/lib/theme-chalk/index.css";
 import "font-awesome/css/font-awesome.min.css";
 import { utils, dict } from "@/utils/base";
 import rules from "@/utils/rules";
 //import 'leaflet/dist/leaflet.css'
-import '../static/leaflet/leaflet.css'
+import "../static/leaflet/leaflet.css";
 
 Vue.use(ElementUI);
-
+Vue.use(bus);
 /* leaflet icon */
 
 // delete L.Icon.Default.prototype._getIconUrl;
@@ -31,6 +32,16 @@ Vue.prototype.$utils = utils;
 Vue.prototype.$dict = dict;
 //全局验证
 Vue.prototype.$rules = rules;
+
+//组件间通信中间件
+
+// var eventBus = {
+//   install(Vue, options) {
+//     Vue.prototype.$bus = Vue;
+//   }
+// };
+// Vue.use(eventBus);
+//Vue.prototype.$bus = Vue;
 
 /* eslint-disable no-new */
 new Vue({

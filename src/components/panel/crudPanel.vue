@@ -1,18 +1,13 @@
 <template>
-  <div class="map-div">
-    <div class="left">
-      <div class="panelAD">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>实况观测</span>
-            <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
-            <el-button icon="el-icon-circle-plus" @click="addButton"></el-button>
-          </div>
-          <div class="box-card-main">{{'列表内容 '}}</div>
-        </el-card>
+  <div class="panel">
+    <!-- <el-button @click="testbutton">测试</el-button> -->
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span>实况观测</span>
+        <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+        <el-button icon="el-icon-circle-plus" @click="addButton"></el-button>
       </div>
-
-      <div>
+      <div class="box-card-main">
         <el-checkbox-group v-model="radioChecked">
           <el-checkbox-button
             v-for="item in optionsPanel"
@@ -22,18 +17,8 @@
           >{{item.label}}</el-checkbox-button>
         </el-checkbox-group>
       </div>
-    </div>
-    <div class="right">
-      <div v-for="item in optionsPanel" :key="item.id">
-        <el-card class="box-card" v-show="item.isShow">
-          <div slot="header" class="clearfix">
-            <span>{{item.label}}</span>
-            <el-button style="float: right; padding: 3px 0" type="text" @click="panelClose(item)">X</el-button>
-          </div>
-          <div v-for="o in item.children" :key="o.id" class="text item">{{'列表内容 ' + o.label }}</div>
-        </el-card>
-      </div>
-    </div>
+    </el-card>
+
     <el-dialog
       title="添加"
       :visible.sync="dialogVisible"
@@ -54,40 +39,84 @@
     </el-dialog>
   </div>
 </template>
-<style lang="less">
-@import url("../../style/style");
-.el-checkbox-group label span,
-.el-checkbox-group label.is-checked span,
-.el-checkbox-group label span.el-checkbox-button__inner,
-.el-checkbox-group label.is-checked span.el-checkbox-button__inner {
-  border: none;
-  list-style-type: none;
-}
-.el-checkbox-group {
-  //el-checkbox-group label span
-  label,
-  label.is-checked {
-    margin: 0px 5px;
-    padding: 0px;
-    border: none;
-    //border: 1px solid #dcdfe6 !important;
 
-    span {
-      border: 1px solid #dcdfe6 !important;
-      border-radius: 4px !important;
-      padding: 5px;
+<style lang="less" scoped>
+@import url("../../style/style");
+/**
+* panel
+* card
+*/
+.el-card {
+  background: @baseBgColorLight;
+  border: none;
+  margin: 10px;
+  /**
+  * header
+  */
+  /deep/ .el-card__header {
+    padding: 10px;
+    color: @baseFontColorHeader;
+    font-size: @baseFontSize;
+    border: none;
+    div {
+      span {
+        float: left;
+      }
+      button {
+        float: right;
+        background: none;
+        border: none;
+        margin: 0px;
+        padding: 0px;
+        i {
+          color: #fff;
+        }
+      }
+    }
+  }
+  /deep/ .el-card__body {
+    clear: both;
+    margin-top: 20px;
+    padding: 5px 10px;
+    background-color: @baseBgColorBox;
+    /**
+    * box
+    * el-checkbox-group
+    * label el-checkbox-button
+    * input span 5px 5px 5px 0px
+    */
+    .el-checkbox-group {
+      label {
+        span {
+          padding: 5px 8px;
+          margin: 5px 5px 5px 0px;
+          border-radius: 10px;
+          border: none;
+        }
+      }
     }
   }
 }
-.map-div {
-  position: relative;
-  widows: 100%;
-  height: 100%;
-  display: flex;
-  .left {
-    flex: 0 0 @baseLeftWidth;
-    background-color: @baseBgColorDark;
-    min-height: 100%;
+/**
+* dialog
+* card
+*/
+.el-dialog__wrapper /deep/ .el-dialog {
+  .el-dialog__header {
+  }
+  .el-dialog__body {
+    margin: 20px;
+    padding: 5px 10px;
+    .el-checkbox-group {
+      label {
+        span {
+          padding: 5px 8px;
+          margin: 5px 5px 5px 0px;
+          border-radius: 10px;
+          
+        }
+      }
+    }
   }
 }
 </style>
@@ -95,13 +124,16 @@
 <script>
 export default {
   components: {},
+  //得到父组件传递过来的数据
+  props: ["message"],
   data() {
     return {
       dialogVisible: false,
       optionsPanel: [],
       boxChecked: [],
-      boxCheckedTemp: [],
       radioChecked: [],
+      boxCheckedTemp: [],
+      radioCheckedTemp: [],
       checkAll: false,
       isIndeterminate: true,
       options: [],
@@ -109,10 +141,6 @@ export default {
     };
   },
   methods: {
-    addButton() {
-      this.dialogVisible = true;
-      this.boxCheckedTemp = this.boxChecked;
-    },
     getArrDifference(arr1, arr2) {
       return arr1.concat(arr2).filter(function(v, i, arr) {
         return arr.indexOf(v) === arr.lastIndexOf(v);
@@ -128,6 +156,11 @@ export default {
         }
       }
       return newArr;
+    },
+
+    addButton() {
+      this.dialogVisible = true;
+      this.boxCheckedTemp = this.boxChecked;
     },
     handleClose(done) {
       const loading = this.$loading({
@@ -171,9 +204,13 @@ export default {
       done();
     },
     handleCheckAllChange(val) {
-      this.boxChecked = val ? this.options : [];
+      console.log(val);
+      if (val) {
+        this.boxChecked = this.options;
+      } else {
+        this.boxChecked = [];
+      }
       this.isIndeterminate = false;
-      //console.log(this.boxChecked);
     },
     handleCheckedChange(value) {
       let checkedCount = value.length;
@@ -183,19 +220,14 @@ export default {
       //console.log(this.boxChecked);
     },
     handleRadioCheckedChange(val) {
-      //console.log(val);
       this.optionsPanel.forEach(element => {
         if (element.label == val.label) {
           element.isShow = !element.isShow;
         }
       });
-    },
-    panelClose(val) {
-      val.isShow = false;
-      //arr.splice(arr.findIndex(item => item.id === 8), 1)
-      this.radioChecked.splice(
-        this.radioChecked.findIndex(item => item.label == val.label)
-      );
+      //bus.$emit('globalEvent',val)
+      this.bus.$emit("optionsPanel", this.optionsPanel);
+      //console.log(this.bus);
     }
   },
   mounted() {
@@ -220,21 +252,50 @@ export default {
         pid: 0,
         id: 2,
         label: "name2",
-        url: "/home2"
+        url: "/home2",
+        isShow: false,
+        children: [
+          {
+            pid: 2,
+            id: 21,
+            isShow: true,
+            label: "name22",
+            url: "/home22"
+          }
+        ]
       }
     ];
     this.optionsData.forEach(element => {
       this.options.push(element.label);
     });
+
+    console.log(this.optionsPanel);
+
+    //绑定全局事件globalEvent
+    this.bus.$on("radioCheckedBus", val => {
+      this.radioChecked.splice(
+        this.radioChecked.findIndex(item => item === val),
+        1
+      );
+    });
+    // 最好在组件销毁前
+    // 清除事件监听
   },
+
   watch: {
-    boxChecked(val) {
-      //console.log(val)
-      //this.boxChecked.push()
-      // val.forEach(element => {
-      //   this.boxChecked.push(element.splice(this.options.indexOf(element),1))
-      // })
+    radioChecked(val) {
+      this.$emit("input", val);
     }
+  },
+  // 最好在组件销毁前
+  // 清除事件监听
+  beforeDestroy() {
+    this.bus.$off("radioCheckedBus");
+    //页面加载
+    this.boxCheckedTemp = this.boxChecked;
+    //页面销毁
+    this.boxChecked;
+    this.radioChecked;
   }
 };
 </script>

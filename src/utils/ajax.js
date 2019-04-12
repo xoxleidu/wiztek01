@@ -14,8 +14,8 @@ ajax.interceptors.request.use(
   config => {
     //const token = store.state.token;
     //token && (config.headers.Authorization = token);
-    config.headers["Content-Type"] =
-      "application/x-www-form-urlencoded;charset=UTF-8";
+    // config.headers["Content-Type"] =
+    //   "application/x-www-form-urlencoded;charset=UTF-8";
     // config.headers["Content-Type"] =
     //   "application/json;charset=UTF-8";
     return config;

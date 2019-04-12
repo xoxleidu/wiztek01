@@ -15,11 +15,10 @@ export default {
   props: ["value"],
   data() {
     return {
-      selected: "",
-      options: {}
+      options: [{ value: "1", label: "一级菜单" },{ value: "1", label: "2级菜单" }]
     };
   },
-  
+
   watch: {
     value: function(newVal) {
       this.selected = newVal;
