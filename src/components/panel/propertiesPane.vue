@@ -4,7 +4,12 @@
       <el-card class="box-card" v-show="item.isShow">
         <div slot="header" class="clearfix">
           <span>{{item.label}}</span>
-          <el-button style="float: right; padding: 3px 0" type="text" @click="panelClose(item)">X</el-button>
+          <el-button
+            style="float: right; padding: 3px 0"
+            type="text"
+            v-model="close"
+            @click="panelClose(item)"
+          >X</el-button>
         </div>
         <div v-for="o in item.children" :key="o.id" class="text item">{{'列表内容 ' + o.label }}</div>
       </el-card>
@@ -72,25 +77,24 @@
 
 <script>
 export default {
-  props:["optionsPanel"],
+  props: ["optionsPanel"],
+//   props: {
+//     optionsPanel: {
+//       type: Object,
+//       default: function() {
+//         return { optionsPanel: [] };
+//       }
+//     }
+//   },
   data() {
     return {
-      //optionsPanel: ""
+        
     };
   },
   mounted() {
-    // if(this.optionsPanel){
-      
-    //   this.optionsPanel = this.optionsPanel
-    // }else{
-    //   return
-    // }
-    //绑定全局事件globalEvent
-    // this.bus.$on("optionsPanel", val => {
-    //   this.optionsPanel = val;
-    // });
-    // 最好在组件销毁前
-    // 清除事件监听
+    if (!optionsPanel) {
+      return {};
+    }
   },
   methods: {
     panelClose(val) {
@@ -99,13 +103,8 @@ export default {
       //   this.radioChecked.splice(
       //     this.radioChecked.findIndex(item => item.label == val.label)
       //   );
-      this.bus.$emit("radioCheckedBus", val.label);
+      this.$emit("proPanelChecked", val.label);
     }
-  },
-  // 最好在组件销毁前
-  // 清除事件监听
-  beforeDestroy() {
-    //this.bus.$off("optionsPanel");
   }
 };
 </script>

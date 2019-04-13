@@ -3,7 +3,7 @@
     <!-- <el-button @click="testbutton">测试</el-button> -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>实况观测</span>
+        <span>{{title}}</span>
         <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
         <el-button icon="el-icon-circle-plus" @click="addButton"></el-button>
       </div>
@@ -125,7 +125,7 @@
 export default {
   components: {},
   //得到父组件传递过来的数据
-  props: ["message"],
+  props: ["title","optionsData"],
   data() {
     return {
       dialogVisible: false,
@@ -137,7 +137,7 @@ export default {
       checkAll: false,
       isIndeterminate: true,
       options: [],
-      optionsData: {}
+      //optionsData: {}
     };
   },
   methods: {
@@ -231,40 +231,10 @@ export default {
     }
   },
   mounted() {
-    this.optionsData = [
-      {
-        pid: 0,
-        id: 1,
-        label: "name1",
-        url: "/home1",
-        isShow: false,
-        children: [
-          {
-            pid: 1,
-            id: 11,
-            isShow: true,
-            label: "name11",
-            url: "/home11"
-          }
-        ]
-      },
-      {
-        pid: 0,
-        id: 2,
-        label: "name2",
-        url: "/home2",
-        isShow: false,
-        children: [
-          {
-            pid: 2,
-            id: 21,
-            isShow: true,
-            label: "name22",
-            url: "/home22"
-          }
-        ]
-      }
-    ];
+    
+    // if(!this.optionsData){
+    //   return
+    // }
     this.optionsData.forEach(element => {
       this.options.push(element.label);
     });

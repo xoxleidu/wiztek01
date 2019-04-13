@@ -3,8 +3,14 @@
     <!-- 左侧面板 -->
     <div class="left_bg" v-show="isCollapseL">
       <div class="panel">
-        <crudPanel v-model="crudData"></crudPanel>
+        <crudPanel v-model="radioChecked" title="实况预测" :optionsData="rawData.live"></crudPanel>
       </div>
+      <!-- <div class="panel">
+        <crudPanel v-model="radioChecked" title="模式预报" :optionsData="rawData.trees"></crudPanel>
+      </div> -->
+      <!-- <div class="panel">
+        <crudPanel v-model="radioChecked['zbfg']" title="植被覆盖"></crudPanel>
+      </div>-->
     </div>
     <!-- 左侧面板 -->
     <!-- 左侧隐藏按钮 -->
@@ -52,7 +58,8 @@
     <!-- 右侧隐藏按钮 -->
     <!-- 右侧面板 -->
     <div class="right_bg" v-show="isCollapseR">
-      <proPanel></proPanel>
+      <!-- <proPanel v-model="proPanelChecked" v-on:optionsPanel="propanelData"></proPanel> -->
+      <proPanel :optionsPanel="propanelData"></proPanel>
     </div>
     <!-- 右侧面板 -->
   </div>
@@ -75,7 +82,9 @@ export default {
       //地图数据
       map: {},
       //
-      crudData: ""
+      rawData: [],
+      radioChecked:[],
+      propanelData: []
     };
   },
   mounted() {
@@ -99,18 +108,73 @@ export default {
 
     this.isCollapseL = true;
   },
-  created() {},
+  created() {
+    let data = [
+      {
+        pid: 0,
+        id: 1,
+        label: "name1",
+        url: "/home1",
+        isShow: false,
+        children: [
+          {
+            pid: 1,
+            id: 11,
+            isShow: true,
+            label: "name11",
+            url: "/home11"
+          }
+        ]
+      },
+      {
+        pid: 0,
+        id: 2,
+        label: "name2",
+        url: "/home2",
+        isShow: false,
+        children: [
+          {
+            pid: 2,
+            id: 21,
+            isShow: true,
+            label: "name22",
+            url: "/home22"
+          }
+        ]
+      }
+    ];
+
+    this.rawData = 
+      {
+        live: data,
+        ncep: data,
+        ecmwf: data,
+        graps: data,
+        trees: data
+      }
+    ;
+    this.propanelData = this.rawData.live[0].children
+
+  },
   //监听数据变化
   watch: {
-    crudData(v) {
+    radioChecked(v) {
       if (!!v.length) {
+        
+        
         this.isCollapseR = true;
+
       } else {
         this.isCollapseR = false;
       }
     }
   },
   methods: {
+    // propanelData(val) {
+    //   console.log("optionsPanel " + val)
+    //   this.propanelData = val
+
+    // },
     falseCollapseL() {
       //console.log(this)
       //this.isCollapse = this.isCollapse;
