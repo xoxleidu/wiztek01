@@ -113,7 +113,6 @@
           padding: 5px 8px;
           margin: 5px 5px 5px 0px;
           border-radius: 10px;
-          
         }
       }
     }
@@ -125,7 +124,7 @@
 export default {
   components: {},
   //得到父组件传递过来的数据
-  props: ["title","optionsData"],
+  props: ["title", "optionsData"],
   data() {
     return {
       dialogVisible: false,
@@ -136,7 +135,7 @@ export default {
       radioCheckedTemp: [],
       checkAll: false,
       isIndeterminate: true,
-      options: [],
+      options: []
       //optionsData: {}
     };
   },
@@ -197,14 +196,14 @@ export default {
           });
         });
       }
-
+      this.$emit("propanelData", this.optionsPanel);
       setTimeout(() => {
         loading.close();
       }, 1000);
       done();
     },
     handleCheckAllChange(val) {
-      console.log(val);
+      //console.log(val);
       if (val) {
         this.boxChecked = this.options;
       } else {
@@ -220,18 +219,20 @@ export default {
       //console.log(this.boxChecked);
     },
     handleRadioCheckedChange(val) {
+      var propanelData = "";
       this.optionsPanel.forEach(element => {
         if (element.label == val.label) {
           element.isShow = !element.isShow;
+          propanelData = Object.assign({}, element)
         }
       });
-      //bus.$emit('globalEvent',val)
-      this.bus.$emit("optionsPanel", this.optionsPanel);
+
+          this.$emit("propanelData", propanelData);
+      //this.bus.$emit("optionsPanel", this.optionsPanel);
       //console.log(this.bus);
     }
   },
   mounted() {
-    
     // if(!this.optionsData){
     //   return
     // }
@@ -239,7 +240,7 @@ export default {
       this.options.push(element.label);
     });
 
-    console.log(this.optionsPanel);
+    //console.log(this.optionsPanel);
 
     //绑定全局事件globalEvent
     this.bus.$on("radioCheckedBus", val => {

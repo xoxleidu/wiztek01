@@ -3,11 +3,24 @@
     <!-- 左侧面板 -->
     <div class="left_bg" v-show="isCollapseL">
       <div class="panel">
-        <crudPanel v-model="radioChecked" title="实况预测" :optionsData="rawData.live"></crudPanel>
+        <crudPanel
+          v-model="radioChecked1"
+          title="实况预测"
+          :optionsData="rawData.live"
+          @propanelData="propanelData1"
+        ></crudPanel>
+      </div>
+      <div class="panel">
+        <crudPanel
+          v-model="radioChecked2"
+          title="实况"
+          :optionsData="rawData.trees"
+          @propanelData="propanelData2"
+        ></crudPanel>
       </div>
       <!-- <div class="panel">
         <crudPanel v-model="radioChecked" title="模式预报" :optionsData="rawData.trees"></crudPanel>
-      </div> -->
+      </div>-->
       <!-- <div class="panel">
         <crudPanel v-model="radioChecked['zbfg']" title="植被覆盖"></crudPanel>
       </div>-->
@@ -59,7 +72,7 @@
     <!-- 右侧面板 -->
     <div class="right_bg" v-show="isCollapseR">
       <!-- <proPanel v-model="proPanelChecked" v-on:optionsPanel="propanelData"></proPanel> -->
-      <proPanel :optionsPanel="propanelData"></proPanel>
+      <proPanel :optionsPanel="propanelDatas"></proPanel>
     </div>
     <!-- 右侧面板 -->
   </div>
@@ -83,8 +96,12 @@ export default {
       map: {},
       //
       rawData: [],
-      radioChecked:[],
-      propanelData: []
+      radioSwitch: [],
+      radioChecked: [],
+      radioChecked1: [],
+      radioChecked2: [],
+      optionsPanel: [],
+      propanelDatas: []
     };
   },
   mounted() {
@@ -144,37 +161,115 @@ export default {
       }
     ];
 
-    this.rawData = 
+    let data2 = [
       {
-        live: data,
-        ncep: data,
-        ecmwf: data,
-        graps: data,
-        trees: data
+        pid: 0,
+        id: 1,
+        label: "tree1",
+        url: "/home1",
+        isShow: false,
+        children: [
+          {
+            pid: 1,
+            id: 11,
+            isShow: true,
+            label: "tree11",
+            url: "/home11"
+          }
+        ]
+      },
+      {
+        pid: 0,
+        id: 2,
+        label: "tree2",
+        url: "/home2",
+        isShow: false,
+        children: [
+          {
+            pid: 2,
+            id: 21,
+            isShow: true,
+            label: "tree22",
+            url: "/home22"
+          }
+        ]
       }
-    ;
-    this.propanelData = this.rawData.live[0].children
+    ];
 
+    this.rawData = {
+      live: data,
+      ncep: data,
+      ecmwf: data,
+      graps: data,
+      trees: data2
+    };
   },
   //监听数据变化
   watch: {
-    radioChecked(v) {
-      if (!!v.length) {
-        
-        
-        this.isCollapseR = true;
-
-      } else {
-        this.isCollapseR = false;
-      }
+    radioChecked1(v) {
+      this.radioCheckedOver(v);
+    },
+    radioChecked2(v) {
+      this.radioCheckedOver(v);
     }
   },
   methods: {
-    // propanelData(val) {
-    //   console.log("optionsPanel " + val)
-    //   this.propanelData = val
+    radioCheckedOver(v) {
+      console.log("开关");
+      console.log(v);
+      if (v.length) {
+        v.forEach(e => {
+          this.radioChecked.push(e);
+        });
+        this.radioChecked = this.uniqArr(this.radioChecked);
+      }
+      console.log(this.radioChecked);
+      console.log("开关");
+      if (!!this.radioChecked1.length || !!this.radioChecked2.length) {
+        this.isCollapseR = true;
+      } else {
+        this.isCollapseR = false;
+        this.optionsPanel = [];
+        this.radioChecked = [];
+      }
+    },
+    propanelData1(val) {
+      //this.optionsPanel = []
 
-    // },
+      if (val.isShow) {
+        this.propanelDatas.push(val);
+      } else {
+        this.propanelDatas = this.propanelDatas.filter(element => {
+          if (val.label != element.label) {
+            return true;
+          }
+        });
+      }
+    },
+    propanelData2(val) {
+      //this.optionsPanel = []
+      if (val.isShow) {
+        this.propanelDatas.push(val);
+      } else {
+        this.propanelDatas = this.propanelDatas.filter(element => {
+          if (val.label != element.label) {
+            return true;
+          }
+        });
+      }
+    },
+    propanelData() {
+      // var temp = this.uniqArrObject(val)
+      // if (temp.length) {
+      //   this.optionsPanel.push(val);
+      // } else {
+      //   this.optionsPanel = this.optionsPanel.filter(element => {
+      //     if (val.id != element.id) {
+      //       return true;
+      //     }
+      //   });
+      // }
+    },
     falseCollapseL() {
       //console.log(this)
       //this.isCollapse = this.isCollapse;
@@ -192,6 +287,31 @@ export default {
       } else {
         this.isCollapseR = true;
       }
+    },
+    uniqArr(array) {
+      var temp = [];
+      var index = [];
+      var l = array.length;
+      for (var i = 0; i < l; i++) {
+        for (var j = i + 1; j < l; j++) {
+          if (array[i] === array[j]) {
+            i++;
+            j = i;
+          }
+        }
+        temp.push(array[i]);
+        index.push(i);
+      }
+      //console.log(index);
+      return temp;
+    },
+    uniqArrObject(array) {
+      var obj = {};
+      var arr = array.reduce(function(item, next) {
+        obj[next.key] ? "" : (obj[next.key] = true && item.push(next));
+        return item;
+      }, []);
+      return arr;
     }
   }
 };

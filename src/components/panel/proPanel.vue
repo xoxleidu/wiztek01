@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div v-for="item in optionsPanel" :key="item.id">
+    <div v-for="item in optionsPanels" :key="item.label">
       <el-card class="box-card" v-show="item.isShow">
         <div slot="header" class="clearfix">
           <span>{{item.label}}</span>
           <el-button style="float: right; padding: 3px 0" type="text" @click="panelClose(item)">X</el-button>
         </div>
-        <div v-for="o in item.children" :key="o.id" class="text item">{{'列表内容 ' + o.label }}</div>
+        <div v-for="o in item.children" :key="o.label" class="text item">{{'列表内容 ' + o.label }}</div>
       </el-card>
     </div>
   </div>
@@ -72,15 +72,17 @@
 
 <script>
 export default {
-  props:["optionsPanel"],
+  props: ["optionsPanel"],
   data() {
     return {
-      //optionsPanel: ""
+      optionsPanels: []
     };
   },
   mounted() {
+    //console.log("面板");
+    //console.log(this.optionsPanel);
     // if(this.optionsPanel){
-      
+
     //   this.optionsPanel = this.optionsPanel
     // }else{
     //   return
@@ -91,6 +93,11 @@ export default {
     // });
     // 最好在组件销毁前
     // 清除事件监听
+  },
+  watch: {
+    optionsPanel() {
+      this.optionsPanels = Object.assign({}, this.optionsPanel)
+    }
   },
   methods: {
     panelClose(val) {
