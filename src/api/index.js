@@ -1,5 +1,10 @@
 import { get, post } from "@/utils/ajax";
 
+export const buttonData = data => {
+  //query = JSON.parse(JSON.stringify(query));
+  return get("/static/button.json", data);
+};
+
 export const login = data => {
   //query = JSON.parse(JSON.stringify(query));
   return post("/login", data);

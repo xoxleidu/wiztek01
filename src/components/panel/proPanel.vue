@@ -6,7 +6,8 @@
           <span>{{item.label}}</span>
           <el-button style="float: right; padding: 3px 0" type="text" @click="panelClose(item)">X</el-button>
         </div>
-        <div v-for="o in item.children" :key="o.label" class="text item">{{'列表内容 ' + o.label }}</div>
+        <!-- <div v-for="o in item.children" :key="o.label" class="text item">{{'列表内容 ' + o.label }}</div> -->
+        <colorBar :colorStyle="setColorStyle"></colorBar>
       </el-card>
     </div>
   </div>
@@ -71,18 +72,23 @@
 </style>
 
 <script>
+import colorBar from "@/components/panel/colorBar";
 export default {
+  components: { colorBar },
   props: ["optionsPanel"],
   data() {
     return {
-      optionsPanels: []
+      optionsPanels: [],
+      setColorStyle: {
+        color: "style1",
+        text: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      }
     };
   },
   mounted() {
     //console.log("面板");
     //console.log(this.optionsPanel);
     // if(this.optionsPanel){
-
     //   this.optionsPanel = this.optionsPanel
     // }else{
     //   return
@@ -96,7 +102,7 @@ export default {
   },
   watch: {
     optionsPanel() {
-      this.optionsPanels = Object.assign({}, this.optionsPanel)
+      this.optionsPanels = Object.assign({}, this.optionsPanel);
     }
   },
   methods: {

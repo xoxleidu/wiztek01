@@ -5,7 +5,7 @@ import { dict } from "./base";
 //   "application/x-www-form-urlencoded;charset=UTF-8";
 
 const ajax = axios.create({
-  baseURL: dict.API_URL,
+  baseURL: dict.BASE_URL,
   timeout: 10000,
 });
 

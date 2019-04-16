@@ -32,35 +32,57 @@ var routes = [
     component: mainH
   },
   {
-    path: "/home",
-    meta: { name: "观测分析", single: true },
+    path: "/livePredict",
+    meta: { name: "实况预报", single: true },
     component: mainH,
     children: [
       {
-        path: "/home",
-        component: () => import("@/pages/analysis/index")
+        path: "/livePredict",
+        component: () => import("@/pages/livePredict/index")
       }
     ]
   },
   {
-    path: "/home1",
-    meta: { name: "监测预警", single: true },
+    path: "/StatisticalAnalysis",
+    meta: { name: "统计分析", single: true },
     component: mainH,
     children: [
       {
-        path: "/home1",
-        component: () => import("@/pages/warning/index")
+        path: "/StatisticalAnalysis",
+        component: () => import("@/pages/StatisticalAnalysis/index")
       }
     ]
   },
   {
-    path: "/home2",
-    meta: { name: "质量评估", single: true },
+    path: "/BeltRoad",
+    meta: { name: "一带一路", single: true },
     component: mainH,
     children: [
       {
-        path: "/home2",
-        component: () => import("@/pages/assessment/index")
+        path: "/BeltRoad",
+        component: () => import("@/pages/BeltRoad/index")
+      }
+    ]
+  },
+  {
+    path: "/productMade",
+    meta: { name: "产品制作", single: true },
+    component: mainH,
+    children: [
+      {
+        path: "/productMade",
+        component: () => import("@/pages/productMade/index")
+      }
+    ]
+  },
+  {
+    path: "/systemMonitoring",
+    meta: { name: "系统监控", single: true },
+    component: mainH,
+    children: [
+      {
+        path: "/systemMonitoring",
+        component: () => import("@/pages/systemMonitoring/index")
       }
     ]
   },

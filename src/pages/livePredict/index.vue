@@ -13,9 +13,33 @@
       <div class="panel">
         <crudPanel
           v-model="radioChecked2"
-          title="实况"
-          :optionsData="rawData.trees"
+          title="NCEP"
+          :optionsData="rawData.ncep"
           @propanelData="propanelData2"
+        ></crudPanel>
+      </div>
+      <div class="panel">
+        <crudPanel
+          v-model="radioChecked3"
+          title="ECMWF"
+          :optionsData="rawData.ecmwf"
+          @propanelData="propanelData3"
+        ></crudPanel>
+      </div>
+      <div class="panel">
+        <crudPanel
+          v-model="radioChecked4"
+          title="GRAPS"
+          :optionsData="rawData.graps"
+          @propanelData="propanelData4"
+        ></crudPanel>
+      </div>
+      <div class="panel">
+        <crudPanel
+          v-model="radioChecked5"
+          title="植被覆盖"
+          :optionsData="rawData.trees"
+          @propanelData="propanelData5"
         ></crudPanel>
       </div>
       <div class="panel">
@@ -90,6 +114,8 @@ import crudPanel from "@/components/panel/crudPanel";
 import proPanel from "@/components/panel/proPanel";
 import dateHoursOne from "@/components/select/dateHoursOne";
 import progerssBar from "@/components/progerss/progerssBar";
+import jsonData from "@/pages/json/button.json";
+import { buttonData } from "@/api/index";
 export default {
   components: { crudPanel, proPanel, dateHoursOne, progerssBar },
   data() {
@@ -104,11 +130,15 @@ export default {
       //地图数据
       map: {},
       //
+      tempData:[],
       rawData: [],
       radioSwitch: [],
       radioChecked: [],
       radioChecked1: [],
       radioChecked2: [],
+      radioChecked3: [],
+      radioChecked4: [],
+      radioChecked5: [],
       optionsPanel: [],
       propanelDatas: [],
       //选择时间
@@ -173,7 +203,6 @@ export default {
         ]
       }
     ];
-
     let data2 = [
       {
         pid: 0,
@@ -208,23 +237,40 @@ export default {
         ]
       }
     ];
-
     this.rawData = {
-      live: data,
-      ncep: data,
-      ecmwf: data,
-      graps: data,
+      live: data2,
+      ncep: data2,
+      ecmwf: data2,
+      graps: data2,
       trees: data2
     };
+// async funA(){
+//         var res =  await axios.post('')//这里的res就是你axios请求回来的结果了
+//     }
+      buttonData().then(e => {
+        console.log(e)
+        this.rawData.live = e.data;
+        this.tempData.push(this.rawData)
+      });
+
+    // loginOut(context) {
+    //   return new Promise(resolve => {
+    //     context.commit("clearPanelButtonState");
+    //     resolve();
+    //   });
+    // }
   },
   //监听数据变化
   watch: {
+    rawData() {
+      
+    },
     radioChecked1(v) {
       this.radioCheckedOver(v);
     },
     radioChecked2(v) {
       this.radioCheckedOver(v);
-    },
+    }
     // progerssData(v) {
     //   console.log(this.progerssData)
     // }
@@ -250,20 +296,21 @@ export default {
       }
     },
     propanelData1(val) {
-      //this.optionsPanel = []
-
-      if (val.isShow) {
-        this.propanelDatas.push(val);
-      } else {
-        this.propanelDatas = this.propanelDatas.filter(element => {
-          if (val.label != element.label) {
-            return true;
-          }
-        });
-      }
+      this.propanelData(val);
     },
     propanelData2(val) {
-      //this.optionsPanel = []
+      this.propanelData(val);
+    },
+    propanelData3(val) {
+      this.propanelData(val);
+    },
+    propanelData4(val) {
+      this.propanelData(val);
+    },
+    propanelData5(val) {
+      this.propanelData(val);
+    },
+    propanelData(val) {
       if (val.isShow) {
         this.propanelDatas.push(val);
       } else {
@@ -273,18 +320,6 @@ export default {
           }
         });
       }
-    },
-    propanelData() {
-      // var temp = this.uniqArrObject(val)
-      // if (temp.length) {
-      //   this.optionsPanel.push(val);
-      // } else {
-      //   this.optionsPanel = this.optionsPanel.filter(element => {
-      //     if (val.id != element.id) {
-      //       return true;
-      //     }
-      //   });
-      // }
     },
     falseCollapseL() {
       //console.log(this)
@@ -427,7 +462,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.2);
   width: 90%;
   z-index: 9999;
-  padding: 20px;
+  padding: 10px;
 }
 
 /**

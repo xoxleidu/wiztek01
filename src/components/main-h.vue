@@ -27,6 +27,7 @@ export default {
     this.clientHeight = document.documentElement.clientHeight;
     this.mapHeight = this.clientHeight - 60;
     console.log(localStorage)
+    
   },
   mounted() {
     

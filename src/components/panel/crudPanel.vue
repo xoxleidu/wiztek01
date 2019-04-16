@@ -140,35 +140,7 @@ export default {
     };
   },
   methods: {
-    getArrDifference(arr1, arr2) {
-      return arr1.concat(arr2).filter(function(v, i, arr) {
-        return arr.indexOf(v) === arr.lastIndexOf(v);
-      });
-    },
-    getArrEqual(arr1, arr2) {
-      let newArr = [];
-      for (let i = 0; i < arr2.length; i++) {
-        for (let j = 0; j < arr1.length; j++) {
-          if (arr1[j] === arr2[i]) {
-            newArr.push(arr1[j]);
-          }
-        }
-      }
-      return newArr;
-    },
-
-    addButton() {
-      this.dialogVisible = true;
-      this.boxCheckedTemp = this.boxChecked;
-    },
-    handleClose(done) {
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)"
-      });
-
+    setChicked() {
       this.optionsPanel = [];
       this.optionsData.filter(element => {
         for (var i = 0; i < this.boxChecked.length; i++) {
@@ -197,6 +169,36 @@ export default {
         });
       }
       this.$emit("propanelData", this.optionsPanel);
+    },
+    getArrDifference(arr1, arr2) {
+      return arr1.concat(arr2).filter(function(v, i, arr) {
+        return arr.indexOf(v) === arr.lastIndexOf(v);
+      });
+    },
+    getArrEqual(arr1, arr2) {
+      let newArr = [];
+      for (let i = 0; i < arr2.length; i++) {
+        for (let j = 0; j < arr1.length; j++) {
+          if (arr1[j] === arr2[i]) {
+            newArr.push(arr1[j]);
+          }
+        }
+      }
+      return newArr;
+    },
+
+    addButton() {
+      this.dialogVisible = true;
+      this.boxCheckedTemp = this.boxChecked;
+    },
+    handleClose(done) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)"
+      });
+      this.setChicked();
       setTimeout(() => {
         loading.close();
       }, 1000);
@@ -216,18 +218,18 @@ export default {
       this.checkAll = checkedCount === this.options.length;
       this.isIndeterminate =
         checkedCount > 0 && checkedCount < this.options.length;
-      //console.log(this.boxChecked);
+      console.log(this.boxChecked);
     },
     handleRadioCheckedChange(val) {
       var propanelData = "";
       this.optionsPanel.forEach(element => {
         if (element.label == val.label) {
           element.isShow = !element.isShow;
-          propanelData = Object.assign({}, element)
+          propanelData = Object.assign({}, element);
         }
       });
 
-          this.$emit("propanelData", propanelData);
+      this.$emit("propanelData", propanelData);
       //this.bus.$emit("optionsPanel", this.optionsPanel);
       //console.log(this.bus);
     }
@@ -239,8 +241,12 @@ export default {
     this.optionsData.forEach(element => {
       this.options.push(element.label);
     });
-
-    //console.log(this.optionsPanel);
+    // this.options[0].isShow = true
+    // this.options[0].isChecked = true
+    // this.options[1].isShow = true
+    // this.setChicked(this.options);
+    console.log("测试");
+    
 
     //绑定全局事件globalEvent
     this.bus.$on("radioCheckedBus", val => {

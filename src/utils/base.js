@@ -1,4 +1,4 @@
-var BASE_URL = "http://localhost:8070/";
+var BASE_URL = "http://localhost:8080/";
 var API_URL = "http://yapi.demo.qunar.com/mock/40712";
 var IMAGEL_URL = "https://jsonplaceholder.typicode.com/posts/";
 
