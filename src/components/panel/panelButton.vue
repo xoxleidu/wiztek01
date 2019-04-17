@@ -163,7 +163,7 @@ export default {
         this.optionsPanel.forEach(element => {
           radioCheckedTemp.forEach(e => {
             if (e == element.label) {
-              element.show = false;
+              element.isShow = false;
             }
           });
         });
@@ -224,7 +224,7 @@ export default {
       var propanelData = "";
       this.optionsPanel.forEach(element => {
         if (element.label == val.label) {
-          element.show = !element.show;
+          element.isShow = !element.isShow;
           propanelData = Object.assign({}, element);
         }
       });
@@ -234,20 +234,13 @@ export default {
       //console.log(this.bus);
     }
   },
+  created() {},
   mounted() {
-    // if(!this.optionsData){
-    //   return
-    // }
+    console.log("button",this.optionsData);
+    console.log("button",this.optionsData);
     this.optionsData.forEach(element => {
       this.options.push(element.label);
     });
-    // this.options[0].show = true
-    // this.options[0].isChecked = true
-    // this.options[1].show = true
-    // this.setChicked(this.options);
-    console.log("测试");
-    
-
     //绑定全局事件globalEvent
     this.bus.$on("radioCheckedBus", val => {
       this.radioChecked.splice(

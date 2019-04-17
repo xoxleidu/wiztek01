@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="item in optionsPanels" :key="item.label">
-      <el-card class="box-card" v-show="item.show">
+      <el-card class="box-card" v-show="item.isShow">
         <div slot="header" class="clearfix">
           <span>{{item.label}}</span>
           <el-button style="float: right; padding: 3px 0" type="text" @click="panelClose(item)">X</el-button>
@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     panelClose(val) {
-      val.show = false;
+      val.isShow = false;
       //   //arr.splice(arr.findIndex(item => item.id === 8), 1)
       //   this.radioChecked.splice(
       //     this.radioChecked.findIndex(item => item.label == val.label)

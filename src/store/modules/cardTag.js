@@ -9,8 +9,8 @@ const panelButton = {
       localStorage.removeItem("panelButtonData");
     },
     getPanelButtonState(state, pbInfo) {
-      state.live = pbInfo.live;
-      state.trees = pbInfo.trees;
+      console.log("store",pbInfo)
+      state = pbInfo;
       localStorage.setItem("panelButtonData", JSON.stringify(state));
     }
     // getPanelButtonState() {

@@ -1,122 +1,156 @@
-[
-  {
-    "id": "id111",
-    "label": "逐小时气温",
-    "pid": "0",
-    "url": "www.baidu.com",
-    "children": {
-      "id": "id1111",
+{
+  "live": [
+    {
+      "id": "id111",
       "label": "逐小时气温",
-      "pid": "pid112",
+      "pid": "0",
       "url": "www.baidu.com",
+      "children": {
+        "id": "id1111",
+        "label": "逐小时气温",
+        "pid": "pid112",
+        "url": "www.baidu.com",
+        "show": false
+      },
+      "checked": false,
       "show": false
     },
-    "checked": false,
-    "show": false
-  },
-  {
-    "id": "id112",
-    "label": "逐日气温",
-    "pid": "0",
-    "url": "www.baidu.com",
-    "children": {
-      "id": "id1112",
+    {
+      "id": "id112",
       "label": "逐日气温",
-      "pid": "pid112",
+      "pid": "0",
       "url": "www.baidu.com",
+      "children": {
+        "id": "id1112",
+        "label": "逐日气温",
+        "pid": "pid112",
+        "url": "www.baidu.com",
+        "show": false
+      },
+      "checked": false,
       "show": false
     },
-    "checked": false,
-    "show": false
-  },
-  {
-    "id": "id113",
-    "label": "低温",
-    "pid": "0",
-    "url": "www.baidu.com",
-    "children": {
-      "id": "id1113",
+    {
+      "id": "id113",
       "label": "低温",
-      "pid": "pid112",
+      "pid": "0",
       "url": "www.baidu.com",
+      "children": {
+        "id": "id1113",
+        "label": "低温",
+        "pid": "pid112",
+        "url": "www.baidu.com",
+        "show": false
+      },
+      "checked": false,
       "show": false
     },
-    "checked": false,
-    "show": false
-  },
-  {
-    "id": "id114",
-    "label": "露点",
-    "pid": "0",
-    "url": "www.baidu.com",
-    "children": {
-      "id": "id1114",
+    {
+      "id": "id114",
       "label": "露点",
-      "pid": "id114",
+      "pid": "0",
       "url": "www.baidu.com",
+      "children": {
+        "id": "id1114",
+        "label": "露点",
+        "pid": "id114",
+        "url": "www.baidu.com",
+        "show": false
+      },
+      "checked": false,
       "show": false
     },
-    "checked": false,
-    "show": false
-  },
-  {
-    "id": "id115",
-    "label": "一小时降水",
-    "pid": "0",
-    "url": "www.baidu.com",
-    "children": {
-      "id": "id1115",
+    {
+      "id": "id115",
       "label": "一小时降水",
       "pid": "0",
       "url": "www.baidu.com",
+      "children": {
+        "id": "id1115",
+        "label": "一小时降水",
+        "pid": "0",
+        "url": "www.baidu.com",
+        "show": false
+      },
+      "checked": false,
       "show": false
     },
-    "checked": false,
-    "show": false
-  },
-  {
-    "id": "id116",
-    "label": "逐三小时降水",
-    "pid": "0",
-    "url": "www.baidu.com",
-    "children": {
-      "id": "id1116",
+    {
+      "id": "id116",
       "label": "逐三小时降水",
-      "pid": "pid112",
+      "pid": "0",
       "url": "www.baidu.com",
+      "children": {
+        "id": "id1116",
+        "label": "逐三小时降水",
+        "pid": "pid112",
+        "url": "www.baidu.com",
+        "show": false
+      },
+      "checked": false,
       "show": false
     },
-    "checked": false,
-    "show": false
-  },
-  {
-    "id": "id117",
-    "label": "风",
-    "pid": "0",
-    "url": "www.baidu.com",
-    "children": {
-      "id": "id1117",
+    {
+      "id": "id117",
       "label": "风",
-      "pid": "pid112",
+      "pid": "0",
       "url": "www.baidu.com",
+      "children": {
+        "id": "id1117",
+        "label": "风",
+        "pid": "pid112",
+        "url": "www.baidu.com",
+        "show": false
+      },
+      "checked": false,
       "show": false
     },
-    "checked": false,
-    "show": false
-  },
-  {
-    "id": "id118",
-    "label": "能见度",
-    "pid": "0",
-    "url": "www.baidu.com",
-    "children": {
-      "id": "id1118",
+    {
+      "id": "id118",
       "label": "能见度",
-      "pid": "pid112",
+      "pid": "0",
       "url": "www.baidu.com",
+      "children": {
+        "id": "id1118",
+        "label": "能见度",
+        "pid": "pid112",
+        "url": "www.baidu.com",
+        "show": false
+      },
+      "checked": false,
+      "show": false
+    }
+  ],
+  "trees": [
+    {
+      "id": "id611",
+      "label": "1植被",
+      "pid": "0",
+      "url": "www.baidu.com",
+      "children": {
+        "id": "id6111",
+        "label": "1植被",
+        "pid": "id611",
+        "url": "www.baidu.com",
+        "show": false
+      },
+      "checked": false,
       "show": false
     },
-    "checked": false,
-    "show": false
-  }
-]
+    {
+      "id": "id612",
+      "label": "2植被",
+      "pid": "0",
+      "url": "www.baidu.com",
+      "children": {
+        "id": "id6112",
+        "label": "2植被",
+        "pid": "id612",
+        "url": "www.baidu.com",
+        "show": false
+      },
+      "checked": false,
+      "show": false
+    }
+  ]
+}

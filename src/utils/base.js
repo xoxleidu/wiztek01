@@ -1,12 +1,13 @@
-var BASE_URL = "http://localhost:8080/";
-var API_URL = "http://yapi.demo.qunar.com/mock/40712";
+var BASE_URL = "http://localhost:8088/";
+var API_URL = "http://yapi.demo.qunar.com/mock/62972";
+//var API_URL = "http://10.0.0.109:8088";
 var IMAGEL_URL = "https://jsonplaceholder.typicode.com/posts/";
 
 var BASE_TABLE_PAGE = 1;
 var BASE_TABLE_SIZE = 10;
 
 var IMAGEL_TYPE = "image/jpeg";
-var IMAGEL_SIZE = 1024*1024*2;
+var IMAGEL_SIZE = 1024 * 1024 * 2;
 
 var dict = {
   //全局字典
