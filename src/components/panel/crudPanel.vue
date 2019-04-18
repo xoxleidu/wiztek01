@@ -233,6 +233,9 @@ export default {
       this.$emit("propanelData", propanelData);
       //this.bus.$emit("optionsPanel", this.optionsPanel);
       //console.log(this.bus);
+    },
+    initPanelData(v) {
+      console.log("children", v);
     }
   },
   // computed: {
@@ -244,9 +247,9 @@ export default {
     // if(!this.optionsData){
     //   return
     // }
-    console.log("loding", this.optionsData.length);
-    if (!!this.optionsData.length) {
-      this.loading = false;
+    console.log("panel", this.optionsData.length);
+    if (!!this.optionsData) {
+      return;
     }
     this.optionsData.forEach(element => {
       this.options.push(element.label);
@@ -266,7 +269,12 @@ export default {
     // 最好在组件销毁前
     // 清除事件监听
   },
-
+  computed: {
+    // optionsPanel() {
+    //   return this.optionsPanel.length
+    // }
+  },
+  created() {},
   watch: {
     radioChecked(val) {
       this.$emit("input", val);

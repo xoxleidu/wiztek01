@@ -3,12 +3,21 @@
     <!-- 左侧面板 -->
     <div class="left_bg" v-show="isCollapseL">
       <div class="panel">
+        <!-- <panelButton
+          v-if="!LOADING"
+          v-model="radioChecked1"
+          title="实况预测"
+          :optionsData="_oPanelData.live"
+          @propanelData="propanelData1"
+          ref="panelFunction"
+        ></panelButton>-->
         <panelButton
           v-if="liveLoading"
           v-model="radioChecked1"
           title="实况预测"
-          :optionsData="_oPanelData_live"
+          :optionsData="_oPanelData.live"
           @propanelData="propanelData1"
+          ref="panelFunction"
         ></panelButton>
       </div>
 
@@ -87,11 +96,14 @@ import dateHoursOne from "@/components/select/dateHoursOne";
 import progerssBar from "@/components/progerss/progerssBar";
 import jsonData from "@/pages/json/button.json";
 import { buttonData, buttonData2 } from "@/api/index";
+import { mapState } from "vuex";
+import { Message } from "element-ui";
+import NProgress from "nprogress";
 export default {
   components: { panelButton, dialogBox, panelAttr, dateHoursOne, progerssBar },
   data() {
     return {
-      liveLoading: false,
+      liveLoading: true,
       //隐藏按钮数据
       isCollapseL: false,
       isCollapseR: false,
@@ -104,7 +116,6 @@ export default {
       //
       tempData: [],
       _oPanelData: { live: [], ncep: [], ecmwf: [], graps: [], trees: [] },
-      _oPanelData_live: [],
       radioSwitch: [],
       radioChecked: [],
       radioChecked1: [],
@@ -140,7 +151,40 @@ export default {
       .addTo(this.map);
 
     this.isCollapseL = true;
-    console.log("mounted", this._oPanelData);
+
+    //调用子组件方法
+    // if (this._oPanelData.live.length) {
+    //   this.$refs.panelFunction.initPanelData("haha");
+    // }
+
+    NProgress.inc();
+
+    if (!this._oPanelData.live.length) {
+      // Message({
+      //   showClose: true,
+      //   message: "信息丢失，重新登录",
+      //   type: "error"
+      // });
+      this.$message({
+        type: "error",
+        message: "信息丢失，重新登录!"
+      });
+      console.log("router", document.referrer);
+      this.$router.replace({ path: "/login" });
+      // if (document.referrer) {
+      //   location.href = document.referrer;
+      // } else {
+      //   this.$router.replace({ name: "/login" });
+      //   // location.reload();
+      // }
+      // this.liveLoading = false;
+      // this.$nextTick(() => {
+      //   this.initData();
+      //   this.liveLoading = true;
+      // });
+      //location.reload();
+    }
+    NProgress.done();
   },
   created() {
     /**
@@ -151,7 +195,7 @@ export default {
         graps: [],
         trees: []
        */
-    //console.log("json", jsonData);
+
     this._oPanelData = {
       live: [],
       ncep: [],
@@ -159,75 +203,52 @@ export default {
       graps: [],
       trees: []
     };
-    //this.$set(this._oPanelData, "live", jsonData);
-    // this.$set(this._oPanelData, "ncep", jsonData);
-    // this.$set(this._oPanelData, "ecmwf", jsonData);
-    // this.$set(this._oPanelData, "graps", jsonData);
-    // this.$set(this._oPanelData, "trees", jsonData);
+
+    this.$store.dispatch("actPanelButtonState");
     this.initData();
+    //this.apiData();
 
-    // new Promise((resolve,reject) => {
-    //       if (res.status === 200){
-    //         resolve(res);
-    //       }
-    //     }).then((res) => {
-    //       this.category = res.data.data.category;
-    //       this.adBar = res.data.data.advertesPicture.PICTURE_ADDRESS;
-    //       this.bannerSwipePics = res.data.data.slides;
-    //       this.recommendGoods = res.data.data.recommend;
-    //       // 也可异步获取再传给子组件 Promise
-    //       this.floorSeafood = res.data.data.floor1;
-    //       this.floorBeverage = res.data.data.floor2;
-    //       this.floorFruits = res.data.data.floor3;
-    //       console.log(this.floorFruits);
-    //       this._initScroll();
-    //     })
-    //   }).catch(err => {
-    //     console.log(err);
-    //   });
+    //setTimeout("", 3000);
 
-    console.log("old", this._oPanelData);
-    //console.log("this.$store.getters.liveDatas", this.$store.getters.liveDatas);
     // buttonData2().then(e => {
-    //   //this._oPanelData.lvie = Object.assign({}, this._oPanelData.live, e.data);
+    //   this._oPanelData.lvie = Object.assign({}, this._oPanelData.live, e.data);
     //   console.log("post", e);
     // });
-    //this.$set(this._oPanelData, "live", ted)
 
     // this.$nextTick(() => {
     //   $('select').select2();
     // });
   },
-
   //监听数据变化
   watch: {
-    _oPanelData_live(v) {
-      console.log("bh", v);
-    },
     radioChecked1(v) {
-      console.log("r1", v);
       this.radioCheckedOver(v);
     },
     radioChecked2(v) {
-      console.log("r2", v);
       this.radioCheckedOver(v);
     }
-    // progerssData(v) {
-    //   console.log(this.progerssData)
-    // }
+  },
+  //页面渲染完成
+  computed: {
+    ...mapState(["LOADING"])
+  },
+  updated: function() {
+    //console.log("updata", this._oPanelData.live);
+    //this.apiData();
+    //this.$set(this._oPanelData, "live", this.$store.getters.liveDatas);
   },
   methods: {
+    //async await
     initData() {
-      buttonData().then(e => {
-        console.log("get", e);
-        //this.$set(this._oPanelData, "live", e);
-        setTimeout(() => {
-          this.$store.commit("getPanelButtonState", e.data);
-        }, 3000);
+      this.$store.commit("showLoading");
+      this.$set(this._oPanelData, "live", this.$store.getters.liveDatas);
+      this.$store.commit("hideLoading");
+    },
+    apiData() {
+      buttonData().then(res => {
+        console.log("api", res.data);
+        this.$set(this._oPanelData, "live", res.data.live);
       });
-      this._oPanelData_live = this.$store.getters.liveDatas;
-      //this._oPanelData.live = Object.assign({}, this._oPanelData.live, this.$store.getters.liveDatas);
-      this.liveLoading = true;
     },
     radioCheckedOver(v) {
       if (v.length) {
@@ -272,8 +293,6 @@ export default {
       }
     },
     falseCollapseL() {
-      //console.log(this)
-      //this.isCollapse = this.isCollapse;
       if (this.isCollapseL) {
         this.isCollapseL = false;
       } else {
@@ -281,8 +300,6 @@ export default {
       }
     },
     falseCollapseR() {
-      //console.log(this)
-      //this.isCollapse = this.isCollapse;
       if (this.isCollapseR) {
         this.isCollapseR = false;
       } else {
@@ -303,7 +320,6 @@ export default {
         temp.push(array[i]);
         index.push(i);
       }
-      //console.log(index);
       return temp;
     },
     uniqArrObject(array) {

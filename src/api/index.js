@@ -11,6 +11,10 @@ export const buttonData = data => {
   return ajax.get("/get", { params: data });
 };
 
+export const getPanelButtonState = () => {
+  return ajax.get("/get");
+};
+
 export const buttonData2 = data => {
   //query = JSON.parse(JSON.stringify(query));
   var data = [
