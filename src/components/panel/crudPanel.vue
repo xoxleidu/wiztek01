@@ -127,6 +127,7 @@ export default {
   props: ["title", "optionsData"],
   data() {
     return {
+      loading: true,
       dialogVisible: false,
       optionsPanel: [],
       boxChecked: [],
@@ -234,10 +235,19 @@ export default {
       //console.log(this.bus);
     }
   },
+  // computed: {
+  //   optionsData() {
+  //     return this.$store.getters.liveDatas || [];
+  //   }
+  // },
   mounted() {
     // if(!this.optionsData){
     //   return
     // }
+    console.log("loding", this.optionsData.length);
+    if (!!this.optionsData.length) {
+      this.loading = false;
+    }
     this.optionsData.forEach(element => {
       this.options.push(element.label);
     });
@@ -245,8 +255,6 @@ export default {
     // this.options[0].isChecked = true
     // this.options[1].show = true
     // this.setChicked(this.options);
-    console.log("测试");
-    
 
     //绑定全局事件globalEvent
     this.bus.$on("radioCheckedBus", val => {

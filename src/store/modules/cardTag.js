@@ -9,10 +9,16 @@ const panelButton = {
       localStorage.removeItem("panelButtonData");
     },
     getPanelButtonState(state, pbInfo) {
-      console.log("store",pbInfo)
+      console.log("store", pbInfo);
       state = pbInfo;
       localStorage.setItem("panelButtonData", JSON.stringify(state));
     }
+    // showLoading(state) {
+    //   state.LOADING = true;
+    // },
+    // hideLoading(state) {
+    //   state.LOADING = false;
+    // }
     // getPanelButtonState() {
     //   localStorage.removeItem("wiztek");
     // }

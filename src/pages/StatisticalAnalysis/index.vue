@@ -2,11 +2,12 @@
   <div class="main_div">
     <!-- 左侧面板 -->
     <div class="left_bg" v-show="isCollapseL">
-      <div class="panel" v-if="_oPanelData.live.length!=0? true:false">
+      <div class="panel">
         <panelButton
+          v-if="liveLoading"
           v-model="radioChecked1"
           title="实况预测"
-          :optionsData="_oPanelData.live"
+          :optionsData="_oPanelData_live"
           @propanelData="propanelData1"
         ></panelButton>
       </div>
@@ -90,6 +91,7 @@ export default {
   components: { panelButton, dialogBox, panelAttr, dateHoursOne, progerssBar },
   data() {
     return {
+      liveLoading: false,
       //隐藏按钮数据
       isCollapseL: false,
       isCollapseR: false,
@@ -102,6 +104,7 @@ export default {
       //
       tempData: [],
       _oPanelData: { live: [], ncep: [], ecmwf: [], graps: [], trees: [] },
+      _oPanelData_live: [],
       radioSwitch: [],
       radioChecked: [],
       radioChecked1: [],
@@ -148,7 +151,7 @@ export default {
         graps: [],
         trees: []
        */
-    console.log("json", jsonData);
+    //console.log("json", jsonData);
     this._oPanelData = {
       live: [],
       ncep: [],
@@ -156,21 +159,33 @@ export default {
       graps: [],
       trees: []
     };
-    //this._oPanelData = Object.assign({}, this._oPanelData.live, jsonData);
     //this.$set(this._oPanelData, "live", jsonData);
     // this.$set(this._oPanelData, "ncep", jsonData);
     // this.$set(this._oPanelData, "ecmwf", jsonData);
     // this.$set(this._oPanelData, "graps", jsonData);
     // this.$set(this._oPanelData, "trees", jsonData);
-    buttonData().then(e => {
-      console.log("get", e);
-      setTimeout(() => {
-        this.$store.commit("getPanelButtonState", e.data);
-        console.log("pagesstore", this._oPanelData);
-      }, 3000);
-    });
+    this.initData();
 
-    this._oPanelData.live = this.$store.getters.liveDatas;
+    // new Promise((resolve,reject) => {
+    //       if (res.status === 200){
+    //         resolve(res);
+    //       }
+    //     }).then((res) => {
+    //       this.category = res.data.data.category;
+    //       this.adBar = res.data.data.advertesPicture.PICTURE_ADDRESS;
+    //       this.bannerSwipePics = res.data.data.slides;
+    //       this.recommendGoods = res.data.data.recommend;
+    //       // 也可异步获取再传给子组件 Promise
+    //       this.floorSeafood = res.data.data.floor1;
+    //       this.floorBeverage = res.data.data.floor2;
+    //       this.floorFruits = res.data.data.floor3;
+    //       console.log(this.floorFruits);
+    //       this._initScroll();
+    //     })
+    //   }).catch(err => {
+    //     console.log(err);
+    //   });
+
     console.log("old", this._oPanelData);
     //console.log("this.$store.getters.liveDatas", this.$store.getters.liveDatas);
     // buttonData2().then(e => {
@@ -183,12 +198,18 @@ export default {
     //   $('select').select2();
     // });
   },
+
   //监听数据变化
   watch: {
+    _oPanelData_live(v) {
+      console.log("bh", v);
+    },
     radioChecked1(v) {
+      console.log("r1", v);
       this.radioCheckedOver(v);
     },
     radioChecked2(v) {
+      console.log("r2", v);
       this.radioCheckedOver(v);
     }
     // progerssData(v) {
@@ -196,17 +217,25 @@ export default {
     // }
   },
   methods: {
+    initData() {
+      buttonData().then(e => {
+        console.log("get", e);
+        //this.$set(this._oPanelData, "live", e);
+        setTimeout(() => {
+          this.$store.commit("getPanelButtonState", e.data);
+        }, 3000);
+      });
+      this._oPanelData_live = this.$store.getters.liveDatas;
+      //this._oPanelData.live = Object.assign({}, this._oPanelData.live, this.$store.getters.liveDatas);
+      this.liveLoading = true;
+    },
     radioCheckedOver(v) {
-      console.log("开关");
-      console.log(v);
       if (v.length) {
         v.forEach(e => {
           this.radioChecked.push(e);
         });
         this.radioChecked = this.uniqArr(this.radioChecked);
       }
-      console.log(this.radioChecked);
-      console.log("开关");
       if (!!this.radioChecked1.length || !!this.radioChecked2.length) {
         this.isCollapseR = true;
       } else {
