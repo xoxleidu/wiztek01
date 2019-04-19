@@ -247,8 +247,8 @@ export default {
     // if(!this.optionsData){
     //   return
     // }
-    console.log("panel", this.optionsData.length);
-    if (!!this.optionsData) {
+    //console.log("panel", this.optionsData.length);
+    if (!this.optionsData) {
       return;
     }
     this.optionsData.forEach(element => {

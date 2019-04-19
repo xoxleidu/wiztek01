@@ -20,7 +20,14 @@
           ref="panelFunction"
         ></panelButton>
       </div>
-
+      <panelButton
+        v-if="liveLoading"
+        v-model="radioChecked2"
+        title="实况预测"
+        :optionsData="_oPanelData.trees"
+        @propanelData="propanelData2"
+        ref="panelFunction"
+      ></panelButton>
       <div class="panel">
         <dateHoursOne v-model="testdate"></dateHoursOne>
       </div>
@@ -159,7 +166,7 @@ export default {
 
     NProgress.inc();
 
-    if (!this._oPanelData.live.length) {
+    if (!this._oPanelData.live) {
       // Message({
       //   showClose: true,
       //   message: "信息丢失，重新登录",
@@ -241,7 +248,8 @@ export default {
     //async await
     initData() {
       this.$store.commit("showLoading");
-      this.$set(this._oPanelData, "live", this.$store.getters.liveDatas);
+      this._oPanelData = Object.assign({}, this.$store.getters.liveDatas);
+      //this.$set(this._oPanelData, "live", this.$store.getters.liveDatas);
       this.$store.commit("hideLoading");
     },
     apiData() {

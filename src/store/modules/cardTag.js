@@ -12,7 +12,7 @@ const panelButton = {
     },
     PanelButtonState(state, pbInfo) {
       console.log("进入mutation", pbInfo);
-      state.live = pbInfo.live;
+      state.live = pbInfo;
       state.LOADING = true;
       localStorage.setItem("panelButtonData", JSON.stringify(state));
     },
