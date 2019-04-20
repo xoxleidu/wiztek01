@@ -38,7 +38,7 @@
       "children": {
         "id": "id1113",
         "label": "低温",
-        "pid": "pid112",
+        "pid": "id113",
         "url": "www.baidu.com",
         "show": false
       },
@@ -98,7 +98,7 @@
       "children": {
         "id": "id1117",
         "label": "风",
-        "pid": "pid112",
+        "pid": "id117",
         "url": "www.baidu.com",
         "show": false
       },
@@ -113,7 +113,7 @@
       "children": {
         "id": "id1118",
         "label": "能见度",
-        "pid": "pid112",
+        "pid": "id118",
         "url": "www.baidu.com",
         "show": false
       },

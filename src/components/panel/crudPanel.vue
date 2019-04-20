@@ -8,12 +8,14 @@
         <el-button icon="el-icon-circle-plus" @click="addButton"></el-button>
       </div>
       <div class="box-card-main">
-        <el-checkbox-group v-model="radioChecked">
+        <el-checkbox-group v-model="radioChecked" @change="handleRadioChange">
           <el-checkbox-button
-            v-for="item in optionsPanel"
-            :label="item.label"
+            v-for="item in optionsData"
+            v-if="item.checked"
+            :label="item.id"
             :key="item.id"
-            @change="handleRadioCheckedChange(item)"
+            :checked="item.show"
+            @change="handleRadioChecked($event,item.id,item.show)"
           >{{item.label}}</el-checkbox-button>
         </el-checkbox-group>
       </div>
@@ -34,7 +36,13 @@
       >全选</el-checkbox>
       <div style="margin: 15px 0;"></div>
       <el-checkbox-group v-model="boxChecked" @change="handleCheckedChange">
-        <el-checkbox-button v-for="item in options" :label="item" :key="item">{{item}}</el-checkbox-button>
+        <el-checkbox-button
+          v-for="item in optionsData"
+          :label="item.id"
+          :key="item.id"
+          :checked="item.checked"
+          @change="handleBoxChecked(item)"
+        >{{item.label}}</el-checkbox-button>
       </el-checkbox-group>
     </el-dialog>
   </div>
@@ -129,68 +137,16 @@ export default {
     return {
       loading: true,
       dialogVisible: false,
-      optionsPanel: [],
       boxChecked: [],
       radioChecked: [],
-      boxCheckedTemp: [],
-      radioCheckedTemp: [],
       checkAll: false,
       isIndeterminate: true,
-      options: []
-      //optionsData: {}
+      aOptions: []
     };
   },
   methods: {
-    setChicked() {
-      this.optionsPanel = [];
-      this.optionsData.filter(element => {
-        for (var i = 0; i < this.boxChecked.length; i++) {
-          if (element.label === this.boxChecked[i]) {
-            //console.log(i)
-            //console.log(element)
-            this.optionsPanel.push(element);
-          }
-        }
-      });
-
-      var radioCheckedTemp = this.getArrDifference(
-        this.boxChecked,
-        this.boxCheckedTemp
-      );
-      if (radioCheckedTemp.length) {
-        this.radioChecked = this.radioChecked.filter(
-          item => !radioCheckedTemp.some(ele => ele === item)
-        );
-        this.optionsPanel.forEach(element => {
-          radioCheckedTemp.forEach(e => {
-            if (e == element.label) {
-              element.show = false;
-            }
-          });
-        });
-      }
-      this.$emit("propanelData", this.optionsPanel);
-    },
-    getArrDifference(arr1, arr2) {
-      return arr1.concat(arr2).filter(function(v, i, arr) {
-        return arr.indexOf(v) === arr.lastIndexOf(v);
-      });
-    },
-    getArrEqual(arr1, arr2) {
-      let newArr = [];
-      for (let i = 0; i < arr2.length; i++) {
-        for (let j = 0; j < arr1.length; j++) {
-          if (arr1[j] === arr2[i]) {
-            newArr.push(arr1[j]);
-          }
-        }
-      }
-      return newArr;
-    },
-
     addButton() {
       this.dialogVisible = true;
-      this.boxCheckedTemp = this.boxChecked;
     },
     handleClose(done) {
       const loading = this.$loading({
@@ -199,96 +155,62 @@ export default {
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.7)"
       });
-      this.setChicked();
+      console.log("close", this.optionsData);
+      //this.setChicked();
       setTimeout(() => {
         loading.close();
       }, 1000);
       done();
     },
     handleCheckAllChange(val) {
-      //console.log(val);
-      if (val) {
-        this.boxChecked = this.options;
-      } else {
-        this.boxChecked = [];
-      }
+      this.boxChecked = val ? this.aOptions : [];
+      this.optionsData.forEach(e => {
+        if (val) {
+          e.checked = true;
+          e.show = false;
+        } else {
+          e.checked = false;
+          e.show = false;
+        }
+      });
       this.isIndeterminate = false;
     },
     handleCheckedChange(value) {
       let checkedCount = value.length;
-      this.checkAll = checkedCount === this.options.length;
+      this.checkAll = checkedCount === this.optionsData.length;
       this.isIndeterminate =
-        checkedCount > 0 && checkedCount < this.options.length;
-      console.log(this.boxChecked);
+        checkedCount > 0 && checkedCount < this.optionsData.length;
     },
-    handleRadioCheckedChange(val) {
-      var propanelData = "";
-      this.optionsPanel.forEach(element => {
-        if (element.label == val.label) {
-          element.show = !element.show;
-          propanelData = Object.assign({}, element);
+    handleBoxChecked(item) {
+      this.optionsData.forEach(e => {
+        if (e.id == item.id) {
+          e.checked = !e.checked;
+          e.show = false;
         }
       });
-
-      this.$emit("propanelData", propanelData);
-      //this.bus.$emit("optionsPanel", this.optionsPanel);
-      //console.log(this.bus);
     },
-    initPanelData(v) {
-      console.log("children", v);
+    handleRadioChange(value) {},
+    handleRadioChecked(e, item, show) {
+      this.optionsData.forEach(element => {
+        if (element.id == item) {
+          element.show = e;
+          this.$emit("radioData", e, element);
+        }
+      });
     }
   },
-  // computed: {
-  //   optionsData() {
-  //     return this.$store.getters.liveDatas || [];
-  //   }
-  // },
   mounted() {
-    // if(!this.optionsData){
-    //   return
-    // }
-    //console.log("panel", this.optionsData.length);
     if (!this.optionsData) {
       return;
     }
-    this.optionsData.forEach(element => {
-      this.options.push(element.label);
+    this.optionsData.forEach(e => {
+      this.aOptions.push(e.id);
     });
-    // this.options[0].show = true
-    // this.options[0].isChecked = true
-    // this.options[1].show = true
-    // this.setChicked(this.options);
-
-    //绑定全局事件globalEvent
-    this.bus.$on("radioCheckedBus", val => {
-      this.radioChecked.splice(
-        this.radioChecked.findIndex(item => item === val),
-        1
-      );
-    });
-    // 最好在组件销毁前
-    // 清除事件监听
   },
-  computed: {
-    // optionsPanel() {
-    //   return this.optionsPanel.length
-    // }
-  },
-  created() {},
   watch: {
-    radioChecked(val) {
-      this.$emit("input", val);
+    optionsData(v) {
+      console.log(v)
     }
-  },
-  // 最好在组件销毁前
-  // 清除事件监听
-  beforeDestroy() {
-    this.bus.$off("radioCheckedBus");
-    //页面加载
-    this.boxCheckedTemp = this.boxChecked;
-    //页面销毁
-    this.boxChecked;
-    this.radioChecked;
   }
 };
 </script>

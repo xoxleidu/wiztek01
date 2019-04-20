@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-for="item in optionsPanels" :key="item.label">
-      <el-card class="box-card" v-show="item.show">
+    <div v-for="item in optionsPanel" :key="item.id">
+      <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>{{item.label}}</span>
           <el-button style="float: right; padding: 3px 0" type="text" @click="panelClose(item)">X</el-button>
@@ -86,39 +86,15 @@ export default {
     };
   },
   mounted() {
-    //console.log("面板");
-    //console.log(this.optionsPanel);
-    // if(this.optionsPanel){
-    //   this.optionsPanel = this.optionsPanel
-    // }else{
-    //   return
-    // }
-    //绑定全局事件globalEvent
-    // this.bus.$on("optionsPanel", val => {
-    //   this.optionsPanel = val;
-    // });
-    // 最好在组件销毁前
-    // 清除事件监听
-  },
-  watch: {
-    optionsPanel() {
-      this.optionsPanels = Object.assign({}, this.optionsPanel);
+    console.log("属性",this.optionsPanel)
+    if (!this.optionsPanel) {
+      return;
     }
   },
   methods: {
-    panelClose(val) {
-      val.show = false;
-      //   //arr.splice(arr.findIndex(item => item.id === 8), 1)
-      //   this.radioChecked.splice(
-      //     this.radioChecked.findIndex(item => item.label == val.label)
-      //   );
-      this.bus.$emit("radioCheckedBus", val.label);
+    panelClose(item) {
+      this.$emit("input", item.id);
     }
-  },
-  // 最好在组件销毁前
-  // 清除事件监听
-  beforeDestroy() {
-    //this.bus.$off("optionsPanel");
   }
 };
 </script>

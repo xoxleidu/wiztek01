@@ -1,4 +1,5 @@
 import ajax from "@/utils/ajax.js";
+import axios from "axios"
 
 export const buttonData = data => {
   //query = JSON.parse(JSON.stringify(query));
@@ -13,6 +14,10 @@ export const buttonData = data => {
 
 export const getPanelButtonState = () => {
   return ajax.get("/get");
+};
+
+export const getJsonFile = () => {
+  return axios.get("static/button.json")
 };
 
 export const buttonData2 = data => {

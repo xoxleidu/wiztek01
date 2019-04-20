@@ -2,32 +2,11 @@
   <div class="main_div">
     <!-- 左侧面板 -->
     <div class="left_bg" v-show="isCollapseL">
-      <div class="panel">
-        <!-- <panelButton
-          v-if="!LOADING"
-          v-model="radioChecked1"
-          title="实况预测"
-          :optionsData="_oPanelData.live"
-          @propanelData="propanelData1"
-          ref="panelFunction"
-        ></panelButton>-->
-        <panelButton
-          v-if="liveLoading"
-          v-model="radioChecked1"
-          title="实况预测"
-          :optionsData="_oPanelData.live"
-          @propanelData="propanelData1"
-          ref="panelFunction"
-        ></panelButton>
-      </div>
-      <panelButton
-        v-if="liveLoading"
-        v-model="radioChecked2"
-        title="实况预测"
-        :optionsData="_oPanelData.trees"
-        @propanelData="propanelData2"
-        ref="panelFunction"
-      ></panelButton>
+      <panelButton title="实况预测" :optionsData="_oPanelData.live" @radioData="propanelData"></panelButton>
+      <panelButton title="实况预测" :optionsData="_oPanelData.ncep" @radioData="propanelData"></panelButton>
+      <panelButton @radioData="propanelData" title="实况预测" :optionsData="_oPanelData.ecmwf"></panelButton>
+      <panelButton @radioData="propanelData" title="实况预测" :optionsData="_oPanelData.graps"></panelButton>
+      <panelButton @radioData="propanelData" title="实况预测" :optionsData="_oPanelData.trees"></panelButton>
       <div class="panel">
         <dateHoursOne v-model="testdate"></dateHoursOne>
       </div>
@@ -89,7 +68,7 @@
     <!-- 右侧面板 -->
     <div class="right_bg" v-show="isCollapseR">
       <!-- <panelAttr v-model="proPanelChecked" v-on:optionsPanel="propanelData"></panelAttr> -->
-      <panelAttr :optionsPanel="propanelDatas"></panelAttr>
+      <panelAttr v-model="propanelId" :optionsPanel="propanelDatas"></panelAttr>
     </div>
     <!-- 右侧面板 -->
   </div>
@@ -102,7 +81,7 @@ import panelAttr from "@/components/panel/proPanel";
 import dateHoursOne from "@/components/select/dateHoursOne";
 import progerssBar from "@/components/progerss/progerssBar";
 import jsonData from "@/pages/json/button.json";
-import { buttonData, buttonData2 } from "@/api/index";
+import { buttonData, buttonData2, getJsonFile } from "@/api/index";
 import { mapState } from "vuex";
 import { Message } from "element-ui";
 import NProgress from "nprogress";
@@ -110,7 +89,6 @@ export default {
   components: { panelButton, dialogBox, panelAttr, dateHoursOne, progerssBar },
   data() {
     return {
-      liveLoading: true,
       //隐藏按钮数据
       isCollapseL: false,
       isCollapseR: false,
@@ -120,18 +98,16 @@ export default {
       hiddenBarR: "hidden_bar_right",
       //地图数据
       map: {},
-      //
-      tempData: [],
+      //面板数据
       _oPanelData: { live: [], ncep: [], ecmwf: [], graps: [], trees: [] },
-      radioSwitch: [],
       radioChecked: [],
       radioChecked1: [],
       radioChecked2: [],
       radioChecked3: [],
       radioChecked4: [],
       radioChecked5: [],
-      optionsPanel: [],
       propanelDatas: [],
+      propanelId: "",
       //选择时间
       testdate: "",
       //播放条
@@ -184,10 +160,8 @@ export default {
       //   this.$router.replace({ name: "/login" });
       //   // location.reload();
       // }
-      // this.liveLoading = false;
       // this.$nextTick(() => {
       //   this.initData();
-      //   this.liveLoading = true;
       // });
       //location.reload();
     }
@@ -212,8 +186,9 @@ export default {
     };
 
     this.$store.dispatch("actPanelButtonState");
-    this.initData();
     //this.apiData();
+    this.initData();
+    this.initProData();
 
     //setTimeout("", 3000);
 
@@ -228,11 +203,16 @@ export default {
   },
   //监听数据变化
   watch: {
-    radioChecked1(v) {
-      this.radioCheckedOver(v);
+    propanelId(v) {
+      console.log(v);
     },
-    radioChecked2(v) {
-      this.radioCheckedOver(v);
+
+    propanelDatas() {
+      if (!this.propanelDatas.length) {
+        this.isCollapseR = false;
+      } else {
+        this.isCollapseR = true;
+      }
     }
   },
   //页面渲染完成
@@ -248,53 +228,45 @@ export default {
     //async await
     initData() {
       this.$store.commit("showLoading");
-      this._oPanelData = Object.assign({}, this.$store.getters.liveDatas);
+      //this._oPanelData = Object.assign({}, this.$store.getters.liveDatas);
+      this._oPanelData = Object.assign({}, jsonData);
       //this.$set(this._oPanelData, "live", this.$store.getters.liveDatas);
+
+      console.log("store原始数据", this._oPanelData);
       this.$store.commit("hideLoading");
     },
+    initProData() {
+      for (var i in this._oPanelData) {
+        this._oPanelData[i].forEach(element => {
+          if (element.show) {
+            this.propanelDatas.push(element);
+            if (element.children.show) {
+            }
+          }
+          // this.propanelDatas.push(
+          //   element.filter(e => {
+          //     return e.show;
+          //   })
+          // );
+        });
+      }
+      console.log(this.propanelDatas);
+      //this.propanelDatas.push()
+    },
     apiData() {
-      buttonData().then(res => {
-        console.log("api", res.data);
-        this.$set(this._oPanelData, "live", res.data.live);
+      getJsonFile().then(res => {
+        //this.$set(this._oPanelData, "live", res.data.live);
+        console.log("api数据", res);
+        console.log("api数据", this._oPanelData);
       });
     },
-    radioCheckedOver(v) {
-      if (v.length) {
-        v.forEach(e => {
-          this.radioChecked.push(e);
-        });
-        this.radioChecked = this.uniqArr(this.radioChecked);
-      }
-      if (!!this.radioChecked1.length || !!this.radioChecked2.length) {
-        this.isCollapseR = true;
-      } else {
-        this.isCollapseR = false;
-        this.optionsPanel = [];
-        this.radioChecked = [];
-      }
-    },
-    propanelData1(val) {
-      this.propanelData(val);
-    },
-    propanelData2(val) {
-      this.propanelData(val);
-    },
-    propanelData3(val) {
-      this.propanelData(val);
-    },
-    propanelData4(val) {
-      this.propanelData(val);
-    },
-    propanelData5(val) {
-      this.propanelData(val);
-    },
-    propanelData(val) {
-      console.log("radio", val);
-      if (val.show) {
-        this.propanelDatas.push(val);
+
+    propanelData(show, item) {
+      if (show) {
+        this.propanelDatas.push(item);
       } else {
         this.propanelDatas = this.propanelDatas.filter(element => {
-          if (val.label != element.label) {
+          if (item.id != element.id) {
             return true;
           }
         });

@@ -127,6 +127,7 @@ export default {
   props: ["title", "optionsData"],
   data() {
     return {
+      loading: true,
       dialogVisible: false,
       optionsPanel: [],
       boxChecked: [],
@@ -163,7 +164,7 @@ export default {
         this.optionsPanel.forEach(element => {
           radioCheckedTemp.forEach(e => {
             if (e == element.label) {
-              element.isShow = false;
+              element.show = false;
             }
           });
         });
@@ -224,7 +225,7 @@ export default {
       var propanelData = "";
       this.optionsPanel.forEach(element => {
         if (element.label == val.label) {
-          element.isShow = !element.isShow;
+          element.show = !element.show;
           propanelData = Object.assign({}, element);
         }
       });
@@ -232,15 +233,32 @@ export default {
       this.$emit("propanelData", propanelData);
       //this.bus.$emit("optionsPanel", this.optionsPanel);
       //console.log(this.bus);
+    },
+    initPanelData(v) {
+      console.log("children", v);
     }
   },
-  created() {},
+  // computed: {
+  //   optionsData() {
+  //     return this.$store.getters.liveDatas || [];
+  //   }
+  // },
   mounted() {
-    console.log("button",this.optionsData);
-    console.log("button",this.optionsData);
+    // if(!this.optionsData){
+    //   return
+    // }
+    //console.log("panel", this.optionsData.length);
+    if (!this.optionsData) {
+      return;
+    }
     this.optionsData.forEach(element => {
       this.options.push(element.label);
     });
+    // this.options[0].show = true
+    // this.options[0].isChecked = true
+    // this.options[1].show = true
+    // this.setChicked(this.options);
+
     //绑定全局事件globalEvent
     this.bus.$on("radioCheckedBus", val => {
       this.radioChecked.splice(
@@ -251,7 +269,12 @@ export default {
     // 最好在组件销毁前
     // 清除事件监听
   },
-
+  computed: {
+    // optionsPanel() {
+    //   return this.optionsPanel.length
+    // }
+  },
+  created() {},
   watch: {
     radioChecked(val) {
       this.$emit("input", val);
