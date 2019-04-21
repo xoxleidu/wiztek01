@@ -2,45 +2,39 @@
   <div class="main_div">
     <!-- 左侧面板 -->
     <div class="left_bg" v-show="isCollapseL">
-      <panelButton
+      <crudPanel
         title="实况预测"
         :optionsData="_oPanelData.live"
         @radioData="propanelData"
         ref="pbFunction_live"
-      ></panelButton>
-      <panelButton
+      ></crudPanel>
+      <crudPanel
         title="实况预测"
         :optionsData="_oPanelData.ncep"
         @radioData="propanelData"
         ref="pbFunction_ncep"
-      ></panelButton>
-      <panelButton
+      ></crudPanel>
+      <crudPanel
         title="实况预测"
         :optionsData="_oPanelData.ecmwf"
         @radioData="propanelData"
         ref="pbFunction_ecmwf"
-      ></panelButton>
-      <panelButton
+      ></crudPanel>
+      <crudPanel
         title="实况预测"
         :optionsData="_oPanelData.graps"
         @radioData="propanelData"
         ref="pbFunction_graps"
-      ></panelButton>
-      <panelButton
-        title="实况预测"
+      ></crudPanel>
+      <crudPanel
+        title="植被覆盖"
         :optionsData="_oPanelData.trees"
         @radioData="propanelData"
         ref="pbFunction_trees"
-      ></panelButton>
+      ></crudPanel>
       <div class="panel">
         <dateHoursOne v-model="testdate"></dateHoursOne>
       </div>
-      <!-- <div class="panel">
-        <panelButton v-model="radioChecked" title="模式预报" :optionsData="_oPanelData.trees"></panelButton>
-      </div>-->
-      <!-- <div class="panel">
-        <panelButton v-model="radioChecked['zbfg']" title="植被覆盖"></panelButton>
-      </div>-->
     </div>
     <!-- 左侧面板 -->
     <!-- 左侧隐藏按钮 -->
@@ -92,26 +86,26 @@
     <!-- 右侧隐藏按钮 -->
     <!-- 右侧面板 -->
     <div class="right_bg" v-show="isCollapseR">
-      <!-- <panelAttr v-model="proPanelChecked" v-on:optionsPanel="propanelData"></panelAttr> -->
-      <panelAttr v-model="propanelId" :optionsPanel="propanelDatas"></panelAttr>
+      <!-- <proPanel v-model="proPanelChecked" v-on:optionsPanel="propanelData"></proPanel> -->
+      <proPanel v-model="propanelId" :optionsPanel="propanelDatas"></proPanel>
     </div>
     <!-- 右侧面板 -->
   </div>
 </template>
 <script>
 import lmap from "leaflet";
-import panelButton from "@/components/panel/crudPanel";
-import dialogBox from "@/components/panel/dialogBox";
-import panelAttr from "@/components/panel/proPanel";
+import crudPanel from "@/components/panel/crudPanel";
+import proPanel from "@/components/panel/proPanel";
 import dateHoursOne from "@/components/select/dateHoursOne";
 import progerssBar from "@/components/progerss/progerssBar";
 import jsonData from "@/pages/json/button.json";
-import { buttonData, buttonData2, getJsonFile } from "@/api/index";
 import { mapState } from "vuex";
 import { Message } from "element-ui";
 import NProgress from "nprogress";
+
+import { buttonData, buttonData2, getJsonFile } from "@/api/index";
 export default {
-  components: { panelButton, dialogBox, panelAttr, dateHoursOne, progerssBar },
+  components: { crudPanel, proPanel, dateHoursOne, progerssBar },
   data() {
     return {
       //隐藏按钮数据
@@ -125,12 +119,6 @@ export default {
       map: {},
       //面板数据
       _oPanelData: { live: [], ncep: [], ecmwf: [], graps: [], trees: [] },
-      radioChecked: [],
-      radioChecked1: [],
-      radioChecked2: [],
-      radioChecked3: [],
-      radioChecked4: [],
-      radioChecked5: [],
       propanelDatas: [],
       propanelId: "",
       //选择时间
@@ -177,7 +165,6 @@ export default {
         type: "error",
         message: "信息丢失，重新登录!"
       });
-      console.log("router", document.referrer);
       this.$router.replace({ path: "/login" });
       // if (document.referrer) {
       //   location.href = document.referrer;
@@ -214,22 +201,10 @@ export default {
     //this.apiData();
     this.initData();
     this.initProData();
-
-    //setTimeout("", 3000);
-
-    // buttonData2().then(e => {
-    //   this._oPanelData.lvie = Object.assign({}, this._oPanelData.live, e.data);
-    //   console.log("post", e);
-    // });
-
-    // this.$nextTick(() => {
-    //   $('select').select2();
-    // });
   },
   //监听数据变化
   watch: {
     propanelId(item) {
-      
       switch (item.pid) {
         case "live":
           this.$refs.pbFunction_live.proPanelClose(item);
@@ -266,11 +241,7 @@ export default {
   computed: {
     ...mapState(["LOADING"])
   },
-  updated: function() {
-    //console.log("updata", this._oPanelData.live);
-    //this.apiData();
-    //this.$set(this._oPanelData, "live", this.$store.getters.liveDatas);
-  },
+  updated() {},
   methods: {
     //async await
     initData() {
@@ -290,21 +261,13 @@ export default {
             if (element.children.show) {
             }
           }
-          // this.propanelDatas.push(
-          //   element.filter(e => {
-          //     return e.show;
-          //   })
-          // );
         });
       }
-      console.log(this.propanelDatas);
-      //this.propanelDatas.push()
     },
     apiData() {
       getJsonFile().then(res => {
         //this.$set(this._oPanelData, "live", res.data.live);
         console.log("api数据", res);
-        console.log("api数据", this._oPanelData);
       });
     },
 
@@ -332,30 +295,6 @@ export default {
       } else {
         this.isCollapseR = true;
       }
-    },
-    uniqArr(array) {
-      var temp = [];
-      var index = [];
-      var l = array.length;
-      for (var i = 0; i < l; i++) {
-        for (var j = i + 1; j < l; j++) {
-          if (array[i] === array[j]) {
-            i++;
-            j = i;
-          }
-        }
-        temp.push(array[i]);
-        index.push(i);
-      }
-      return temp;
-    },
-    uniqArrObject(array) {
-      var obj = {};
-      var arr = array.reduce(function(item, next) {
-        obj[next.key] ? "" : (obj[next.key] = true && item.push(next));
-        return item;
-      }, []);
-      return arr;
     }
   }
 };

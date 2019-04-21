@@ -26,7 +26,8 @@ var config = {
 		// console.log(config.data);
 		// 初始化色板
 		config.paletteCanvas = initPalette();
-		var layer = L.canvasLayer().delegate(config.window).addTo(config.map);
+		debugger;
+		var layer = L.canvasLayer().delegate(t2m).addTo(config.map);
 		return layer;
 	},
 	// 鼠标移动获取图层数据事件
@@ -87,196 +88,165 @@ var config = {
     }
 };
 
+var t2m = {
+
+
 /**
  * 画图，刷新界面
- * 
+ *
  * @param info
  */
-function onDrawLayer(info) {
+onDrawLayer: function (info) {
 
-	if (config.data == null) {
-		return;
-	}
+  if (config.data == null) {
+    return;
+  }
 
-	var ctx = info.canvas.getContext('2d');
-	ctx.clearRect(0, 0, config.map.getSize().x, config.map.getSize().y);
+  var ctx = info.canvas.getContext('2d');
+  ctx.clearRect(0, 0, config.map.getSize().x, config.map.getSize().y);
 
-	var size = {
-		x : Math.round(config.map.getSize().x),
-		y : Math.round(config.map.getSize().y)
-	};
+  var size = {
+    x: Math.round(config.map.getSize().x),
+    y: Math.round(config.map.getSize().y)
+  };
 
-	// 双线性插值准备的内容，每个定点坐标位置
-	var latArray = [];
-	var lonArray = [];
+  // 双线性插值准备的内容，每个定点坐标位置
+  var latArray = [];
+  var lonArray = [];
 
-	// y轴，从上到下
-	for (var y = 0; y < config.data.latlondata.data.length; y++) {
-		var _lat = config.data.latlondata.lat1 + (config.data.latlondata.dy) * y;
-		var pLat = config.map.latLngToContainerPoint({
-			lat : _lat,
-			lon : 0
-		});
-		latArray.push(Math.round(pLat.y));
-	}
+  // y轴，从上到下
+  for (var y = 0; y < config.data.latlondata.data.length; y++) {
+    var _lat = config.data.latlondata.lat1 + (config.data.latlondata.dy) * y;
+    var pLat = config.map.latLngToContainerPoint({
+      lat: _lat,
+      lon: 0
+    });
+    latArray.push(Math.round(pLat.y));
+  }
 
-	// x轴，从做到右
-	for (var x = 0; x < config.data.latlondata.data[0].length; x++) {
-		var _lon = config.data.latlondata.lon1 + config.data.latlondata.dx * x;
-		var pLon = config.map.latLngToContainerPoint({
-			lat : config.data.latlondata.lat1,
-			lon : _lon
-		});
-		lonArray.push(Math.round(pLon.x));
-	}
+  // x轴，从做到右
+  for (var x = 0; x < config.data.latlondata.data[0].length; x++) {
+    var _lon = config.data.latlondata.lon1 + config.data.latlondata.dx * x;
+    var pLon = config.map.latLngToContainerPoint({
+      lat: config.data.latlondata.lat1,
+      lon: _lon
+    });
+    lonArray.push(Math.round(pLon.x));
+  }
 
-	var canvasX0 = lonArray[0];
-	var canvasY0 = latArray[0];
-	var canvasX1 = lonArray[config.data.latlondata.data[0].length - 1];
-	var canvasY1 = latArray[config.data.latlondata.data.length - 1];
+  var canvasX0 = lonArray[0];
+  var canvasY0 = latArray[0];
+  var canvasX1 = lonArray[config.data.latlondata.data[0].length - 1];
+  var canvasY1 = latArray[config.data.latlondata.data.length - 1];
 
-	canvasX0 = Math.max(canvasX0, 0);
-	canvasX1 = Math.min(canvasX1, size.x);
+  canvasX0 = Math.max(canvasX0, 0);
+  canvasX1 = Math.min(canvasX1, size.x);
 
-	canvasY0 = Math.max(canvasY0, 0);
-	canvasY1 = Math.min(canvasY1, size.y);
+  canvasY0 = Math.max(canvasY0, 0);
+  canvasY1 = Math.min(canvasY1, size.y);
 
-	if (canvasX0 >= size.x || canvasX1 <= 0 || canvasY0 >= size.y
-			|| canvasY1 <= 0) {
-		return;
-	}
+  if (canvasX0 >= size.x || canvasX1 <= 0 || canvasY0 >= size.y
+    || canvasY1 <= 0) {
+    return;
+  }
 
-	var canvasW = canvasX1 - canvasX0;
-	var canvasH = canvasY1 - canvasY0;
+  var canvasW = canvasX1 - canvasX0;
+  var canvasH = canvasY1 - canvasY0;
 
-	console.log("w: " + canvasW);
-	console.log("h: " + canvasH);
+  console.log("w: " + canvasW);
+  console.log("h: " + canvasH);
 
-	var img = ctx.createImageData(canvasW, canvasH);
+  var img = ctx.createImageData(canvasW, canvasH);
 
-	var imgData = img.data;
-	console.log("imgData: " + imgData.length);
-	var count = 0;
-	for (var y = 0; y < config.data.latlondata.data.length - 1; y++) {
+  var imgData = img.data;
+  console.log("imgData: " + imgData.length);
+  var count = 0;
+  for (var y = 0; y < config.data.latlondata.data.length - 1; y++) {
 
-		var y0 = latArray[y];
-		var y1 = latArray[y + 1];
+    var y0 = latArray[y];
+    var y1 = latArray[y + 1];
 
-		if (y1 <= 0 || y0 >= size.y) {
-			continue;
-		}
+    if (y1 <= 0 || y0 >= size.y) {
+      continue;
+    }
 
-		for (var x = 0; x < config.data.latlondata.data[0].length - 1; x++) {
+    for (var x = 0; x < config.data.latlondata.data[0].length - 1; x++) {
 
-			var x0 = lonArray[x];
-			var x1 = lonArray[x + 1];
+      var x0 = lonArray[x];
+      var x1 = lonArray[x + 1];
 
-			if (x0 >= size.x || x1 <= 0) {
-				continue;
-			}
+      if (x0 >= size.x || x1 <= 0) {
+        continue;
+      }
 
-			// 4个顶点值有了
-			var v00 = config.data.latlondata.data[y][x];
-			var v01 = config.data.latlondata.data[y][x + 1];
-			var v10 = config.data.latlondata.data[y + 1][x];
-			var v11 = config.data.latlondata.data[y + 1][x + 1];
-			
-			if(config.data.isabs){
-				v00 = Math.abs(v00);
-				v01 = Math.abs(v01);
-				v10 = Math.abs(v10);
-				v11 = Math.abs(v11);
-			}
-            if(v00==9999||v01==9999||v10==9999||v11==9999){
-            	continue;
-            }
-			// 当前小格子内的像素高度和宽度
-			var ch = (y1 - y0);
-			var cw = (x1 - x0);
+      // 4个顶点值有了
+      var v00 = config.data.latlondata.data[y][x];
+      var v01 = config.data.latlondata.data[y][x + 1];
+      var v10 = config.data.latlondata.data[y + 1][x];
+      var v11 = config.data.latlondata.data[y + 1][x + 1];
 
-			// 4个顶点坐标
-			// 循环行
-			for (var cy = y0; cy < y1; cy++) {
+      if (config.data.isabs) {
+        v00 = Math.abs(v00);
+        v01 = Math.abs(v01);
+        v10 = Math.abs(v10);
+        v11 = Math.abs(v11);
+      }
+      if (v00 == 9999 || v01 == 9999 || v10 == 9999 || v11 == 9999) {
+        continue;
+      }
+      // 当前小格子内的像素高度和宽度
+      var ch = (y1 - y0);
+      var cw = (x1 - x0);
 
-				if (cy < 0 || cy > size.y) {
-					continue;
-				}
+      // 4个顶点坐标
+      // 循环行
+      for (var cy = y0; cy < y1; cy++) {
 
-				//
-				var yy = (cy - y0) / ch;
+        if (cy < 0 || cy > size.y) {
+          continue;
+        }
 
-				// 循环列
-				for (var cx = x0; cx < x1; cx++) {
+        //
+        var yy = (cy - y0) / ch;
 
-					if (cx < 0 || cx > size.x) {
-						continue;
-					}
+        // 循环列
+        for (var cx = x0; cx < x1; cx++) {
 
-					var xx = (cx - x0) / cw;
+          if (cx < 0 || cx > size.x) {
+            continue;
+          }
 
-					var vxy = bilinear(v00, v01, v10, v11, xx, yy);
-					// 不能小于0，不能超出范围
-					var offset = Math.round(Math.min(Math.max((vxy
-							- config.range.min), 0),(config.range.max
-							- config.range.min))*config.step)*4;
-					if (offset >= config.paletteCanvas.length-1) {
-						offset = offset - 4;
-					}
-					var i = ((cy - canvasY0) * canvasW + cx - canvasX0) * 4;
-				/*	if (vxy>0.5&&count <= 100) {
-						count++;
-						console.log("vxy",vxy);
-						console.log("offset", offset)
-						console.log(config.paletteCanvas[offset]);
-					}*/
+          var xx = (cx - x0) / cw;
 
-					imgData[i] = config.paletteCanvas[offset];
-					imgData[i + 1] = config.paletteCanvas[offset + 1];
-					imgData[i + 2] = config.paletteCanvas[offset + 2];
-					imgData[i + 3] = config.opacity *256 ;
-				}
-			}
+          var vxy = bilinear(v00, v01, v10, v11, xx, yy);
+          // 不能小于0，不能超出范围
+          var offset = Math.round(Math.min(Math.max((vxy
+            - config.range.min), 0), (config.range.max
+            - config.range.min)) * config.step) * 4;
+          if (offset >= config.paletteCanvas.length - 1) {
+            offset = offset - 4;
+          }
+          var i = ((cy - canvasY0) * canvasW + cx - canvasX0) * 4;
+          /*	if (vxy>0.5&&count <= 100) {
+                          count++;
+                          console.log("vxy",vxy);
+                          console.log("offset", offset)
+                          console.log(config.paletteCanvas[offset]);
+                      }*/
 
-		}
+          imgData[i] = config.paletteCanvas[offset];
+          imgData[i + 1] = config.paletteCanvas[offset + 1];
+          imgData[i + 2] = config.paletteCanvas[offset + 2];
+          imgData[i + 3] = config.opacity * 256;
+        }
+      }
 
-	}
+    }
 
-	ctx.putImageData(img, canvasX0, canvasY0);
+  }
 
-	if (config.map.getZoom() < 8) {
-		return;
-	}
-
-	ctx.font = "16px 宋体";
-	ctx.textAlign = 'center';
-	ctx.textBaseline = 'middle';
-	ctx.shadowColor = "white";
-	ctx.shadowBlur = 10;
-	ctx.fillStyle = 'white';
-	ctx.strokeStyle = 'white';
-
-	for (var y = 0; y < config.data.latlondata.data.length; y++) {
-
-		var y0 = latArray[y];
-
-		if (y0 <= 0 || y0 >= size.y) {
-			continue;
-		}
-
-		for (var x = 0; x < config.data.latlondata.data[0].length; x++) {
-
-			var x0 = lonArray[x];
-
-			if (x0 >= size.x || x0 <= 0) {
-				continue;
-			}
-
-			var v00 = config.data.latlondata.data[y][x];
-
-			ctx.strokeText("" + v00.toFixed(1), x0, y0);
-		}
-	}
-
+  ctx.putImageData(img, canvasX0, canvasY0);
+}
 };
 
 /**
@@ -378,6 +348,21 @@ function getsample(lat,lng){
 	var yy=hh/Math.abs(config.data.latlondata.dx);
 	var simple={v00:v00,v01:v01,v10:v10,v11:v11,x:xx,y:yy};
 	return simple;
+}
+
+/**
+ *
+ * @param data
+ * @param colors
+ * @param map
+ * @param window
+ * @param opacity
+ */
+function canvase(data, colors, map, window, opacity) {
+config.Draw(data,colors,map,window,opacity);
+}
+export default {
+  canvase
 }
 
 

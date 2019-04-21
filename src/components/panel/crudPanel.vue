@@ -1,6 +1,5 @@
 <template>
   <div class="panel">
-    <!-- <el-button @click="testbutton">测试</el-button> -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>{{title}}</span>
@@ -20,7 +19,6 @@
         </el-checkbox-group>
       </div>
     </el-card>
-
     <el-dialog
       title="添加"
       :visible.sync="dialogVisible"
@@ -155,29 +153,13 @@ export default {
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.7)"
       });
-      // console.log("close", this.radioChecked);
-      // let un1 = this.$utils.getArrDifference(this.aOptions, this.boxChecked);
-      // let un2 = this.$utils.getArrEqual(un1, this.radioChecked);
-      // let temp;
-      // if (un2.length) {
-      //   this.radioChecked.forEach(element => {
-      //     temp = un2.filter(e => {
-      //       if (e != element) {
-      //         return true;
-      //       }
-      //     });
-      //   });
-      //   this.radioChecked = temp;
-      // }
-      // console.log("close", this.radioChecked);
-      //this.radioChecked = this.boxChecked;
+
       setTimeout(() => {
         loading.close();
       }, 1000);
       done();
     },
     proPanelClose(item) {
-      //debugger;
       this.boxChecked.splice(this.boxChecked.findIndex(v => v == item.id), 1);
       this.handleBoxChecked(false, item);
     },

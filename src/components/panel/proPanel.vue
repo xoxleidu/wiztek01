@@ -93,8 +93,7 @@ export default {
   },
   methods: {
     panelClose(item) {
-      console.log("01")
-      let temp = Object.assign({},item)
+      let temp = Object.assign({}, item);
       this.$emit("input", temp);
       //this.bus.$emit("radioCheckedBus", temp);
     }
