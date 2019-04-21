@@ -3,7 +3,7 @@
     {
       "id": "id111",
       "label": "逐小时气温",
-      "pid": "0",
+      "pid": "live",
       "url": "www.baidu.com",
       "children": {
         "id": "id1111",
@@ -18,7 +18,7 @@
     {
       "id": "id112",
       "label": "逐日气温",
-      "pid": "0",
+      "pid": "live",
       "url": "www.baidu.com",
       "children": {
         "id": "id1112",
@@ -33,7 +33,7 @@
     {
       "id": "id113",
       "label": "低温",
-      "pid": "0",
+      "pid": "live",
       "url": "www.baidu.com",
       "children": {
         "id": "id1113",
@@ -42,13 +42,13 @@
         "url": "www.baidu.com",
         "show": false
       },
-      "checked": false,
-      "show": false
+      "checked": true,
+      "show": true
     },
     {
       "id": "id114",
       "label": "露点",
-      "pid": "0",
+      "pid": "live",
       "url": "www.baidu.com",
       "children": {
         "id": "id1114",
@@ -63,7 +63,7 @@
     {
       "id": "id115",
       "label": "一小时降水",
-      "pid": "0",
+      "pid": "live",
       "url": "www.baidu.com",
       "children": {
         "id": "id1115",
@@ -78,7 +78,7 @@
     {
       "id": "id116",
       "label": "逐三小时降水",
-      "pid": "0",
+      "pid": "live",
       "url": "www.baidu.com",
       "children": {
         "id": "id1116",
@@ -93,7 +93,7 @@
     {
       "id": "id117",
       "label": "风",
-      "pid": "0",
+      "pid": "live",
       "url": "www.baidu.com",
       "children": {
         "id": "id1117",
@@ -108,7 +108,7 @@
     {
       "id": "id118",
       "label": "能见度",
-      "pid": "0",
+      "pid": "live",
       "url": "www.baidu.com",
       "children": {
         "id": "id1118",
@@ -121,11 +121,28 @@
       "show": false
     }
   ],
+  "graps": [
+    {
+      "id": "graps611",
+      "label": "GPRS",
+      "pid": "graps",
+      "url": "www.baidu.com",
+      "children": {
+        "id": "graps6111",
+        "label": "GPRS",
+        "pid": "graps611",
+        "url": "www.baidu.com",
+        "show": false
+      },
+      "checked": false,
+      "show": false
+    }
+  ],
   "trees": [
     {
       "id": "id611",
       "label": "1植被",
-      "pid": "0",
+      "pid": "trees",
       "url": "www.baidu.com",
       "children": {
         "id": "id6111",
@@ -140,7 +157,7 @@
     {
       "id": "id612",
       "label": "2植被",
-      "pid": "0",
+      "pid": "trees",
       "url": "www.baidu.com",
       "children": {
         "id": "id6112",
@@ -149,8 +166,8 @@
         "url": "www.baidu.com",
         "show": false
       },
-      "checked": false,
-      "show": false
+      "checked": true,
+      "show": true
     }
   ]
 }

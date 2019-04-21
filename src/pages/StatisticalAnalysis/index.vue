@@ -2,11 +2,36 @@
   <div class="main_div">
     <!-- 左侧面板 -->
     <div class="left_bg" v-show="isCollapseL">
-      <panelButton title="实况预测" :optionsData="_oPanelData.live" @radioData="propanelData"></panelButton>
-      <panelButton title="实况预测" :optionsData="_oPanelData.ncep" @radioData="propanelData"></panelButton>
-      <panelButton @radioData="propanelData" title="实况预测" :optionsData="_oPanelData.ecmwf"></panelButton>
-      <panelButton @radioData="propanelData" title="实况预测" :optionsData="_oPanelData.graps"></panelButton>
-      <panelButton @radioData="propanelData" title="实况预测" :optionsData="_oPanelData.trees"></panelButton>
+      <panelButton
+        title="实况预测"
+        :optionsData="_oPanelData.live"
+        @radioData="propanelData"
+        ref="pbFunction_live"
+      ></panelButton>
+      <panelButton
+        title="实况预测"
+        :optionsData="_oPanelData.ncep"
+        @radioData="propanelData"
+        ref="pbFunction_ncep"
+      ></panelButton>
+      <panelButton
+        title="实况预测"
+        :optionsData="_oPanelData.ecmwf"
+        @radioData="propanelData"
+        ref="pbFunction_ecmwf"
+      ></panelButton>
+      <panelButton
+        title="实况预测"
+        :optionsData="_oPanelData.graps"
+        @radioData="propanelData"
+        ref="pbFunction_graps"
+      ></panelButton>
+      <panelButton
+        title="实况预测"
+        :optionsData="_oPanelData.trees"
+        @radioData="propanelData"
+        ref="pbFunction_trees"
+      ></panelButton>
       <div class="panel">
         <dateHoursOne v-model="testdate"></dateHoursOne>
       </div>
@@ -203,8 +228,30 @@ export default {
   },
   //监听数据变化
   watch: {
-    propanelId(v) {
-      console.log(v);
+    propanelId(item) {
+      
+      switch (item.pid) {
+        case "live":
+          this.$refs.pbFunction_live.proPanelClose(item);
+          break;
+        case "ncep":
+          this.$refs.pbFunction_ncep.proPanelClose(item);
+          break;
+        case "ecmwf":
+          this.$refs.pbFunction_ecmwf.proPanelClose(item);
+          break;
+        case "graps":
+          this.$refs.pbFunction_graps.proPanelClose(item);
+          break;
+        case "trees":
+          this.$refs.pbFunction_trees.proPanelClose(item);
+          break;
+        default:
+          this.$message({
+            type: "error",
+            message: "没有对象"
+          });
+      }
     },
 
     propanelDatas() {

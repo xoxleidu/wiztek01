@@ -86,14 +86,17 @@ export default {
     };
   },
   mounted() {
-    console.log("属性",this.optionsPanel)
+    console.log("属性", this.optionsPanel);
     if (!this.optionsPanel) {
       return;
     }
   },
   methods: {
     panelClose(item) {
-      this.$emit("input", item.id);
+      console.log("01")
+      let temp = Object.assign({},item)
+      this.$emit("input", temp);
+      //this.bus.$emit("radioCheckedBus", temp);
     }
   }
 };

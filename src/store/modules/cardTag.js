@@ -3,8 +3,9 @@ var panelButtonData = JSON.parse(localStorage.panelButtonData || "{}");
 const panelButton = {
   state: {
     live: panelButtonData.live || {},
-    trees: panelButtonData.trees || {},
-    LOADING: false
+    boxChecked: false,
+    radioShow: false,
+    LOADING: false,
   },
   mutations: {
     clearPanelButtonState() {
@@ -21,6 +22,14 @@ const panelButton = {
     },
     hideLoading(state) {
       state.LOADING = false;
+    },
+    handleRadioChecked(state, e, ids) {
+      // this.optionsData.forEach(element => {
+      //   if (element.id == id) {
+      //     element.show = e;
+      //     this.$emit("radioData", e, element);
+      //   }
+      // });
     }
   },
   actions: {
