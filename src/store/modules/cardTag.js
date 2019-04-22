@@ -4,8 +4,7 @@ const panelButton = {
   state: {
     live: panelButtonData.live || {},
     boxChecked: false,
-    radioShow: false,
-    LOADING: false,
+    radioShow: false
   },
   mutations: {
     clearPanelButtonState() {
@@ -14,15 +13,9 @@ const panelButton = {
     PanelButtonState(state, pbInfo) {
       console.log("进入mutation", pbInfo);
       state.live = pbInfo;
-      state.LOADING = true;
       localStorage.setItem("panelButtonData", JSON.stringify(state));
     },
-    showLoading(state) {
-      state.LOADING = true;
-    },
-    hideLoading(state) {
-      state.LOADING = false;
-    },
+
     handleRadioChecked(state, e, ids) {
       // this.optionsData.forEach(element => {
       //   if (element.id == id) {
@@ -47,9 +40,6 @@ const panelButton = {
     },
     treesDatas: state => {
       return !!state.trees;
-    },
-    loading: state => {
-      return state.LOADING;
     }
   }
 };

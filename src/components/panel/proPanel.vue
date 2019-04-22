@@ -7,7 +7,9 @@
           <el-button style="float: right; padding: 3px 0" type="text" @click="panelClose(item)">X</el-button>
         </div>
         <!-- <div v-for="o in item.children" :key="o.label" class="text item">{{'列表内容 ' + o.label }}</div> -->
-        <colorBar :colorStyle="setColorStyle"></colorBar>
+        <div class="box-card-main">
+          <colorBar :colorStyle="setColorStyle"></colorBar>
+        </div>
       </el-card>
     </div>
   </div>
@@ -19,9 +21,10 @@
 * card
 */
 .el-card {
-  background: @baseBgColorLight;
+  background: none;
   border: none;
   margin: 10px;
+  box-shadow: none;
   /**
   * header
   */
@@ -30,43 +33,30 @@
     color: @baseFontColorHeader;
     font-size: @baseFontSize;
     border: none;
-    div {
-      span {
-        float: left;
+    .clearfix {
+      i {
+        font-size: @baseFontSize2;
+        color: @baseBgColorBox;
       }
-      button {
+      .el-button {
         float: right;
         background: none;
         border: none;
         margin: 0px;
         padding: 0px;
-        i {
-          color: #fff;
+        span {
+          color: @baseBgColorBox;
         }
       }
     }
   }
   /deep/ .el-card__body {
     clear: both;
-    margin-top: 20px;
-    padding: 5px 10px;
-    background-color: @baseBgColorBox;
-    /**
-    * box
-    * el-checkbox-group
-    * label el-checkbox-button
-    * input span 5px 5px 5px 0px
-    */
-    .el-checkbox-group {
-      label {
-        span {
-          padding: 5px 8px;
-          margin: 5px 5px 5px 0px;
-          border-radius: 10px;
-          border: none;
-        }
-      }
-    }
+    margin: 0px;
+    padding: 0px;
+    background-color: none;
+    border-radius: 3px;
+    padding: 10px;
   }
 }
 </style>

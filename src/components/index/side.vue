@@ -1,9 +1,9 @@
 <template>
-  <el-row :gutter="0">
-    <el-col :span="6" class="logo_div">
+  <div class="baseHeader">
+    <div class="logo_div">
       <img src="@/assets/logo.png">
-    </el-col>
-    <el-col :span="10">
+    </div>
+    <div class="menu_div">
       <el-menu
         @open="handleOpen"
         @close="handleClose"
@@ -14,25 +14,20 @@
       >
         <side-menu :routers="routers"></side-menu>
       </el-menu>
-    </el-col>
-    <el-col :span="6">
-      <div class="search_div">
-        <globel-search v-model="searchData"></globel-search>
-      </div>
-    </el-col>
-    <el-col :span="1">&nbsp;</el-col>
-    <el-col :span="1" class="userInfo_div">
-      <div class="userInfo_div">
-        <user-info></user-info>
-      </div>
-    </el-col>
-  </el-row>
+    </div>
+    <div class="search_div">
+      <globel-search v-model="searchData"></globel-search>
+    </div>
+    <div class="userInfo_div">
+      <user-info></user-info>
+    </div>
+  </div>
 </template>
 
 <script>
 import sideMenu from "./side-menu";
 import globelSearch from "@/components/search/globel-search";
-import userInfo from "@/components/index/user-info"
+import userInfo from "@/components/index/user-info";
 export default {
   components: { sideMenu, globelSearch, userInfo },
   props: {},
@@ -63,20 +58,27 @@ export default {
 <style lang="less" scoped>
 @import url("../../style/style");
 
-div.el-row {
+.baseHeader {
+  height: 50px;
+  .display_base;
+  .flex_rowWarp;
+  .flex_spaceBetween;
   background-color: @baseBgColorHeader;
-  .el-col {
+  div {
+    flex: 0 0 auto;
+    margin: auto 5px;
     .logo_div {
     }
     .el-menu {
+      margin-top: 9px;
       border: none;
+      height: 40px;
+      line-height: 40px;
       background-color: @baseBgColorHeader;
     }
     .search_div {
-      padding: 8px 0px;
     }
     .userInfo_div {
-      padding: 12px 0px;
     }
   }
 }

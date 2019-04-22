@@ -1,7 +1,9 @@
 <template>
-  <el-input placeholder="请输入内容" v-model="selected">
-    <el-button slot="append" icon="el-icon-search" @click="onSearch"></el-button>
-  </el-input>
+  <div class="search_nav">
+    <el-input placeholder="请输入站号,站名,地区" v-model="selected">
+      <el-button slot="append" icon="el-icon-search" @click="onSearch"></el-button>
+    </el-input>
+  </div>
 </template>
 <script>
 import { searchGlobal, searchAdd } from "@/api/index";
@@ -47,3 +49,33 @@ export default {
   }
 };
 </script>
+<style lang="less" scoped>
+@import url("../../style/style");
+.search_nav {
+  min-width: 260px;
+  max-width: 360px;
+  /deep/ .el-input {
+    padding: auto;
+    input {
+      height: 26px;
+      line-height: 26px;
+      border-radius: 15px;
+      background-color: #EBF4FB;
+      border:none;
+      color: @baseFontColorGrey;
+    }
+    .el-input-group__append {
+      position: absolute;
+      top: 20%;
+      right: 10px;
+      border: none;
+      background: none;
+      button {
+        i {
+          color: @baseBgColorDark;
+        }
+      }
+    }
+  }
+}
+</style>

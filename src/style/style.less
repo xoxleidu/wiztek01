@@ -4,16 +4,20 @@
 @baseBgColorLight: #5f9ed1;
 @baseBgColorHeader: #0984c8;
 @baseBgColorBox: #78b1de;
+@baseBgColorMin: #cbdeec;
 
 //文字颜色
+@baseFontColor: #cbdeec;
 @baseFontColorWhite: #fff;
 @baseFontColorGrey: #bbb;
 @baseFontColorBlack: #555;
-@baseFontColor: @baseFontColorWhite;
-@baseFontColorHeader: #fff;
+@baseFontColorMin: #f3f9fe;
+@baseFontColorHeader: @baseFontColorMin;
+@baseFontColorChecked: #1BD1DC;
 
 //字体大小
 @baseFontSize: 12px;
+@baseFontSize2: 14px;
 @baseFontSizeHeader: 18px;
 
 //组件宽度
@@ -21,6 +25,36 @@
 @baseHeaderHeight: 260px;
 
 a {
-  color: @baseBgColorLight;
+  color: @baseFontColor;
   text-decoration: none;
+}
+
+.display_base {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.flex_rowWarp {
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+}
+.flex_rowNoWarp {
+  -webkit-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+}
+
+.flex_spaceBetween {
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+.flex_spaceAround {
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
+}
+.flex_center {
+  justify-content: center;
+  -webkit-justify-content: center;
 }

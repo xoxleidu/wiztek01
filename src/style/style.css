@@ -1,4 +1,31 @@
 a {
-  color: #5f9ed1;
+  color: #cbdeec;
   text-decoration: none;
+}
+.display_base {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+.flex_rowWarp {
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+}
+.flex_rowNoWarp {
+  -webkit-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+}
+.flex_spaceBetween {
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+.flex_spaceAround {
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
+}
+.flex_center {
+  justify-content: center;
+  -webkit-justify-content: center;
 }

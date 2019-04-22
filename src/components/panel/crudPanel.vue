@@ -2,7 +2,8 @@
   <div class="panel">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>{{title}}</span>
+        <i class="fa fa-chevron-circle-right"></i>
+        {{title}}
         <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
         <el-button icon="el-icon-circle-plus" @click="addButton"></el-button>
       </div>
@@ -53,9 +54,10 @@
 * card
 */
 .el-card {
-  background: @baseBgColorLight;
+  background: none;
   border: none;
   margin: 10px;
+  box-shadow: none;
   /**
   * header
   */
@@ -64,9 +66,10 @@
     color: @baseFontColorHeader;
     font-size: @baseFontSize;
     border: none;
-    div {
-      span {
-        float: left;
+    .clearfix {
+      i {
+        font-size: @baseFontSize2;
+        color: @baseBgColorBox;
       }
       button {
         float: right;
@@ -75,29 +78,37 @@
         margin: 0px;
         padding: 0px;
         i {
-          color: #fff;
+          color: @baseBgColorBox;
         }
       }
     }
   }
   /deep/ .el-card__body {
     clear: both;
-    margin-top: 20px;
-    padding: 5px 10px;
+    margin: 0px;
+    padding: 0px;
     background-color: @baseBgColorBox;
+    border-radius: 3px;
     /**
     * box
     * el-checkbox-group
     * label el-checkbox-button
     * input span 5px 5px 5px 0px
     */
+    // .box-card-main when () {
+    //   padding: 3px;
+    // }
     .el-checkbox-group {
+      .display_base;
+      .flex_rowWarp;
       label {
+        margin: 6px 3px 3px 6px;
         span {
-          padding: 5px 8px;
-          margin: 5px 5px 5px 0px;
+          padding: 4px 8px;
           border-radius: 10px;
-          border: none;
+          border:1px solid;
+          border-color: @baseFontColorChecked;
+          font-size: @baseFontSize;
         }
       }
     }
@@ -235,9 +246,5 @@ export default {
     // 最好在组件销毁前
     // 清除事件监听
   }
-
-  // beforeDestroy() {
-  //   this.bus.$off("radioCheckedBus");
-  // }
 };
 </script>

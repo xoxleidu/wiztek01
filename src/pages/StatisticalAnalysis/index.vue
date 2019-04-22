@@ -197,6 +197,10 @@ export default {
       trees: []
     };
 
+    // this.$store.dispatch("loginOut").then(() => {
+    //     this.$router.replace({ path: "login" });
+    //   });
+
     this.$store.dispatch("actPanelButtonState");
     //this.apiData();
     this.initData();
@@ -296,6 +300,12 @@ export default {
         this.isCollapseR = true;
       }
     }
+  },
+  beforeDestroy() {
+    console.log("before");
+  },
+  destroyed() {
+    console.log("over");
   }
 };
 </script>
@@ -310,7 +320,7 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
-  display: flex;
+  .display_base;
 
   /**
   左边导航栏
@@ -377,7 +387,7 @@ export default {
   地图层
   */
   .map {
-    flex-grow: 1;
+    flex-grow: 0;
     width: 100%;
     height: 100%;
   }

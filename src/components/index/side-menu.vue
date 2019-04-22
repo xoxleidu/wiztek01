@@ -41,26 +41,52 @@ export default {
 <style lang="less" scoped>
 @import url("../../style/style");
 .menu_style {
-  div {
-    float: left;
-    li {
-    height: 60px;
-
-    }
+  .display_base;
+  .flex_rowWarp;
+  .flex_center;
+}
+.menu_style > * {
+  flex: 0 0 auto;
+}
+.menu_style {
+  .el-menu-item {
+    height: 40px;
+    line-height: 40px;
+    margin: 0px 2px;
     i {
-      color: @baseFontColorWhite;
+      color: @baseBgColorMin;
       font-size: @baseFontSizeHeader;
     }
     span {
+      color: @baseBgColorMin;
+    }
+  }
+  .el-menu-item:hover {
+    background: -webkit-linear-gradient(
+      #005590,
+      #0984c8
+    ); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#005590, #0984c8); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#005590, #0984c8); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#005590, #0984c8); /* 标准的语法 */
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+  .is-active {
+    //background-color: @baseBgColorDark;
+    background: -webkit-linear-gradient(
+      #005590,
+      #0984c8
+    ); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#005590, #0984c8); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#005590, #0984c8); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#005590, #0984c8); /* 标准的语法 */
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    span {
       color: @baseFontColorWhite;
     }
-    :hover {
-      background-color: @baseBgColorDark;
-    }
-    .is-active {
-      background-color: @baseBgColorDark;
-      //border-bottom: 2px solid #FFF;
-    }
+    //border-bottom: 2px solid #FFF;
   }
 }
 </style>

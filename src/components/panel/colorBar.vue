@@ -28,7 +28,7 @@ export default {
   widows: 100%;
   position: relative;
   height: 12px;
-  margin: 10px 10px 5px 10px;
+  margin: 0px;
   border-radius: 5px;
 }
 .colorText {

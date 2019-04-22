@@ -25,7 +25,7 @@ export default {
   created() {
     // 获取浏览器可视区域高度
     this.clientHeight = document.documentElement.clientHeight;
-    this.mapHeight = this.clientHeight - 60;
+    this.mapHeight = this.clientHeight - 50;
     console.log(localStorage)
     
   },
@@ -50,5 +50,8 @@ export default {
 .el-container {
   height: clientHeight;
 }
-
+.el-header {
+  height:50px !important;
+  list-style-type: none;
+}
 </style>
