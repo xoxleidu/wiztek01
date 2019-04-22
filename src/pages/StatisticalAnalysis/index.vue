@@ -9,19 +9,19 @@
         ref="pbFunction_live"
       ></crudPanel>
       <crudPanel
-        title="实况预测"
+        title="NCEP"
         :optionsData="_oPanelData.ncep"
         @radioData="propanelData"
         ref="pbFunction_ncep"
       ></crudPanel>
       <crudPanel
-        title="实况预测"
+        title="ECMWF"
         :optionsData="_oPanelData.ecmwf"
         @radioData="propanelData"
         ref="pbFunction_ecmwf"
       ></crudPanel>
       <crudPanel
-        title="实况预测"
+        title="GRAPS"
         :optionsData="_oPanelData.graps"
         @radioData="propanelData"
         ref="pbFunction_graps"
