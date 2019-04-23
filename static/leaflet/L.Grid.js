@@ -26,7 +26,7 @@ var config = {
 		// console.log(config.data);
 		// 初始化色板
 		config.paletteCanvas = initPalette();
-		debugger;
+
 		var layer = L.canvasLayer().delegate(t2m).addTo(config.map);
 		return layer;
 	},

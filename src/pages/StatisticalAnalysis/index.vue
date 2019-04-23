@@ -100,6 +100,9 @@ import dateHoursOne from "@/components/select/dateHoursOne";
 import progerssBar from "@/components/progerss/progerssBar";
 import jsonData from "@/pages/json/button.json";
 import { mapState } from "vuex";
+import {getlonlat} from "@/api/index";
+import  "../../../static/leaflet/L.CanvasLayer";
+import canvase from "../../../static/leaflet/L.Grid";
 import { Message } from "element-ui";
 import NProgress from "nprogress";
 
@@ -129,6 +132,7 @@ export default {
   },
   mounted() {
     //地图初始化
+    //地图初始化
     this.map = lmap
       .map("map", {
         fadeAnimation: false
@@ -137,7 +141,7 @@ export default {
 
     // Product.map = this.map;
     var url1 =
-      "http://t1.tianditu.com/vec_c/wmts?layer=vec&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}";
+      "http://10.1.64.154/ter_w/wmts?service=WMTS&request=GetTile&version=1.0.0&layer=ter&style=&tilematrixSet=w&format=tiles&transparent=false&height=256&width=256&srs=EPSG%3A3857&tilematrix={z}&tilerow={y}&tilecol={x}";
     var url2 =
       "http://webrd{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}";
     lmap
@@ -145,6 +149,55 @@ export default {
         subdomains: ["01", "02", "03", "04"]
       })
       .addTo(this.map);
+
+    this.isCollapseL = true;
+    var colors=[[-3,0,0,235],[-2,82,82,255],[-1,143,143,255],[0,204,204,255],[1,255,133,133],
+      [2,255,102,102],[3,255,10,10]];
+    var latlon=null;
+    getlonlat().then(e=>{
+      console.log(e.data)
+      latlon=e.data;
+      var configdata={latlondata:latlon,isabs:false,mpstep:100};
+      console.log(window);
+      canvase.canvase(configdata,colors,this.map,window,0.3);
+
+      //画等值线
+      var prod = "msl";
+      var data = latlon;
+      var n = data.ny, m = data.nx, values = new Array(n * m);
+      for (var y = 0; y < n; y++) {
+        for (var x = 0; x < m; x++) {
+          values[y * m + x] = data.data[y][x];
+        }
+      }
+
+      var contours = d3.contours()
+        .size([m, n])
+        .thresholds([-20, -15, -10, 0, 5, 10, 15, 20, 25, 30])
+        .smooth(true)
+        (values);
+
+      for (var i = 0; i < contours.length; i++) {
+        for (var j = 0; j < contours[i].coordinates.length; j++) {
+          for (var k = 0; k < contours[i].coordinates[j].length; k++) {
+            for (var m = 0; m < contours[i].coordinates[j][k].length; m++) {
+              contours[i].coordinates[j][k][m][0] = contours[i].coordinates[j][k][m][0] *0.25;
+              contours[i].coordinates[j][k][m][1] = 90-contours[i].coordinates[j][k][m][1]*0.25;
+            }
+          }
+        }
+      }
+      L.geoJSON(contours, {
+        style: function (feature) {
+          var v = feature.geometry.value;
+          var c = "black";
+
+          return { "fill": false, stroke: true, weight: 0.8, color: c };
+        },
+        smoothFactor: 0.3
+
+      }).addTo(this.map);
+    })
 
     this.isCollapseL = true;
 

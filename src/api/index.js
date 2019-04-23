@@ -88,3 +88,6 @@ export const searchGlobal = data => {
 export const searchAdd = data => {
   return ajax.post("/user/postTest", data);
 };
+export const getlonlat =()=>{
+  return ajax.get("/web/api/test/t3");
+}

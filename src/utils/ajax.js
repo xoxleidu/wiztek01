@@ -10,7 +10,7 @@ const ajax = axios.create({
     //"Authorization": "TTTTOOOKKK",
     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
   },
-  baseURL: dict.API_URL
+  baseURL: dict.BASE_URL
 });
 // 添加请求拦截器
 ajax.interceptors.request.use(
