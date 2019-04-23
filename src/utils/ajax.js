@@ -1,5 +1,6 @@
 import axios from "axios";
-//import { Message } from "element-ui";
+import { Message } from "element-ui";
+
 //import store from "@/store";
 import { dict } from "@/utils/base.js";
 
@@ -19,6 +20,11 @@ ajax.interceptors.request.use(
   },
   function(error) {
     // 对请求错误做些什么
+    Message({
+      showClose: true,
+      message: "调用接口错误:" + error,
+      type: "error"
+    });
     return Promise.reject(error);
   }
 );
@@ -54,9 +60,8 @@ ajax.interceptors.response.use(
   },
   function(error) {
     // 对响应错误做点什么
-    console.warn("请求错误", error); // for debug
     Message({
-      message: error.message,
+      message: "接口错误:"+error,
       type: "error",
       duration: 5 * 1000
     });

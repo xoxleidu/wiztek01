@@ -1,6 +1,6 @@
 import ajax from "@/utils/ajax.js";
-import axios from "axios"
-
+import axios from "axios";
+import qs from "qs";
 export const buttonData = data => {
   //query = JSON.parse(JSON.stringify(query));
   var data = {
@@ -9,6 +9,7 @@ export const buttonData = data => {
     name: "TMPprs_850_D24",
     type: "value"
   };
+
   return ajax.get("/get", { params: data });
 };
 
@@ -17,7 +18,7 @@ export const getPanelButtonState = () => {
 };
 
 export const getJsonFile = () => {
-  return axios.get("static/button.json")
+  return axios.get("static/button.json");
 };
 
 export const buttonData2 = data => {
@@ -69,7 +70,12 @@ export const buttonData2 = data => {
       show: false
     }
   ];
+  //后台POST 用requestParams接收时用
+  var ss = qs.stringify(data);
+
+  //后台POST 返回的不是JSON体时用
   //return ajax.post("/post", JSON.parse(JSON.stringify(data)));
+
   return ajax.post("/post", data);
 };
 
@@ -88,6 +94,6 @@ export const searchGlobal = data => {
 export const searchAdd = data => {
   return ajax.post("/user/postTest", data);
 };
-export const getlonlat =()=>{
+export const getlonlat = () => {
   return ajax.get("/web/api/test/t3");
-}
+};

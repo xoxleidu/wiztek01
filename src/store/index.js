@@ -6,22 +6,9 @@ import cardTag from "./modules/cardTag";
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  state: {
-    LOADING: false
-  },
-  getters: {
-    loading: state => {
-      return state.LOADING;
-    }
-  },
-  mutations: {
-    showLoading(state) {
-      state.LOADING = true;
-    },
-    hideLoading(state) {
-      state.LOADING = false;
-    }
-  },
+  state: {},
+  getters: {},
+  mutations: {},
   actions: {},
   modules: {
     user,

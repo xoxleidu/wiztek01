@@ -28,10 +28,17 @@ const panelButton = {
   actions: {
     actPanelButtonState({ commit }) {
       console.log("进入action");
-      getPanelButtonState().then(res => {
-        console.log("action中调用封装后的axios成功", res);
-        commit("PanelButtonState", res.data);
-      });
+      getPanelButtonState()
+        .then(res => {
+          console.log("action中调用封装后的axios成功", res);
+          commit("PanelButtonState", res.data);
+        })
+        .catch(err => {
+          Message({
+            type: "error",
+            message: "接口返回错误:" + err
+          });
+        });
     }
   },
   getters: {

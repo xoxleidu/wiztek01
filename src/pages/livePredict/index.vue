@@ -105,6 +105,7 @@
   import canvase from "../../../static/leaflet/L.Grid";
   import { Message } from "element-ui";
   import NProgress from "nprogress";
+  import * as d3 from "d3";
 
   import { buttonData, buttonData2, getJsonFile } from "@/api/index";
   export default {

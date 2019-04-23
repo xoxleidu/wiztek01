@@ -1,4 +1,4 @@
-var BASE_URL = "http://localhost:8088/";
+var BASE_URL = "http://10.0.0.109:8088/";
 var API_URL = "http://yapi.demo.qunar.com/mock/62972";
 //var API_URL = "http://10.0.0.109:8088";
 var IMAGEL_URL = "https://jsonplaceholder.typicode.com/posts/";
@@ -18,6 +18,14 @@ var dict = {
   BASE_TABLE_SIZE: BASE_TABLE_SIZE,
   IMAGEL_TYPE: IMAGEL_TYPE,
   IMAGEL_SIZE: IMAGEL_SIZE,
+
+  //loading参数
+  loadFullscreen: {
+    lock: true,
+    text: "加载数据,请稍等...",
+    spinner: "el-icon-loading",
+    background: "rgba(0, 0, 0, 0.7)"
+  },
 
   PAY_MODE: [
     {
