@@ -11,7 +11,9 @@ function resolve(dir) {
 module.exports = {
   context: path.resolve(__dirname, "../"),
   entry: {
-    app: "./src/main.js"
+    //app: "./src/main.js"
+    //增加IE浏览器的支持
+    app: ["babel-polyfill", "./src/main.js"]
   },
   output: {
     path: config.build.assetsRoot,

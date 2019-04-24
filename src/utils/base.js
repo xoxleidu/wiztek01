@@ -1,5 +1,5 @@
 var BASE_URL = "http://10.0.0.109:8088/";
-var API_URL = "http://yapi.demo.qunar.com/mock/62972";
+var API_URL = "http://127.0.0.1:8090/";
 //var API_URL = "http://10.0.0.109:8088";
 var IMAGEL_URL = "https://jsonplaceholder.typicode.com/posts/";
 

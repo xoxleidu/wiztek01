@@ -5,7 +5,7 @@ import App from "./App";
 import router from "./router";
 import store from "./store";
 import ElementUI from "element-ui";
-import bus from "@/utils/bus"
+import bus from "@/utils/bus";
 import "element-ui/lib/theme-chalk/index.css";
 import "font-awesome/css/font-awesome.min.css";
 import { utils, dict } from "@/utils/base";
@@ -15,14 +15,6 @@ import "../static/leaflet/leaflet.css";
 
 Vue.use(ElementUI);
 Vue.use(bus);
-/* leaflet icon */
-
-// delete L.Icon.Default.prototype._getIconUrl;
-// L.Icon.Default.mergeOptions({
-//   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-//   iconUrl: require('leaflet/dist/images/marker-icon.png'),
-//   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-// });
 
 Vue.config.productionTip = false;
 
@@ -33,15 +25,9 @@ Vue.prototype.$dict = dict;
 //全局验证
 Vue.prototype.$rules = rules;
 
-//组件间通信中间件
-
-// var eventBus = {
-//   install(Vue, options) {
-//     Vue.prototype.$bus = Vue;
-//   }
-// };
-// Vue.use(eventBus);
-//Vue.prototype.$bus = Vue;
+//判断用户浏览器
+console.log("我用的浏览器及其版本是", utils.browserVersion());
+//对用户浏览器给出的建议
 
 /* eslint-disable no-new */
 new Vue({

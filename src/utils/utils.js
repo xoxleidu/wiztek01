@@ -57,5 +57,49 @@ export default {
       }
     }
     return newArr;
+  },
+  browserStr: function() {
+    return navigator.userAgent;
+  },
+  browserType: function() {
+    //只返回浏览器名称
+    if (this.browserStr().match("Chrome")) {
+      return "Chrome";
+    } else if (this.browserStr().match("Firefox")) {
+      return "Firefox";
+    } else if (this.browserStr().match("MSIE")) {
+      return "IE";
+    } else if (this.browserStr().match("Safari")) {
+      return "Safari";
+    } else if (this.browserStr().match("Opera")) {
+      return "Opera";
+    }
+  },
+  browserVersion: function() {
+    //返回浏览器名称和版本号,如：["Chrome/31.0.1650.63"]，是一个数组类型
+    var regChrome = /chrome\/[\d.]+/gi;
+    var regFF = /firefox\/[\d.]+/gi;
+    var regIE = /msie [\d.]+;/gi;
+    var regSafari = /safari\/[\d.]+/gi;
+    var regOpera = /Opera\/[\d.]+/gi;
+    switch (this.browserType()) {
+      case "Chrome":
+        return this.browserStr().match(regChrome);
+        break;
+      case "Firefox":
+        return this.browserStr().match(regFF);
+        break;
+      case "IE":
+        return this.browserStr().match(regIE);
+        break;
+      case "Safari":
+        return this.browserStr().match(regSafari);
+        break;
+      case "Opera":
+        return this.browserStr().match(regOpera);
+        break;
+      default:
+        return "我的天呐~~~,您这是啥浏览器啊???该换个浏览器了!!!"
+    }
   }
 };
