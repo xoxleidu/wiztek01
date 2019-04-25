@@ -21,7 +21,7 @@
       </div>
     </el-card>
     <el-dialog
-      title="添加"
+      :title="title"
       :visible.sync="dialogVisible"
       width="60%"
       :close-on-click-modal="true"
@@ -106,7 +106,7 @@
         span {
           padding: 4px 8px;
           border-radius: 10px;
-          border:1px solid;
+          border: 1px solid;
           border-color: @baseFontColorChecked;
           font-size: @baseFontSize;
         }
@@ -119,17 +119,33 @@
 * card
 */
 .el-dialog__wrapper /deep/ .el-dialog {
+  border-radius: 5px;
+  border: 1px solid;
+  border-color: @baseBgColorDark;
   .el-dialog__header {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: @baseBgColorHeader;
+    padding: 10px 20px;
+    span {
+      font-size: @baseFontSize3;
+      color: @baseFontColor;
+    }
   }
   .el-dialog__body {
-    margin: 20px;
+    margin: 10px;
     padding: 5px 10px;
     .el-checkbox-group {
+      .display_base;
+      .flex_rowWarp;
       label {
+        margin: 6px 3px 3px 6px;
         span {
-          padding: 5px 8px;
-          margin: 5px 5px 5px 0px;
+          padding: 4px 8px;
           border-radius: 10px;
+          border: 1px solid;
+          border-color: @baseFontColorGrey;
+          font-size: @baseFontSize2;
         }
       }
     }

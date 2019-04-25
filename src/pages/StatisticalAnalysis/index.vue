@@ -57,11 +57,12 @@
       </div>
     </div>
     <!-- 左侧隐藏按钮 -->
-
-    <div id="map" class="map">
-      <div class="progerss">
-        <progerssBar :min="0" :max="24" v-model="progerssData"></progerssBar>
-      </div>
+    <div class="tools">
+      <mapTools :min="0" :max="24" v-model="progerssData"></mapTools>
+    </div>
+    <div id="map" class="map"></div>
+    <div class="progerss">
+      <progerssBar :min="0" :max="24" v-model="progerssData"></progerssBar>
     </div>
 
     <!-- 右侧隐藏按钮 -->
@@ -97,18 +98,19 @@ import lmap from "leaflet";
 import crudPanel from "@/components/panel/crudPanel";
 import proPanel from "@/components/panel/proPanel";
 import dateHoursOne from "@/components/select/dateHoursOne";
-import progerssBar from "@/components/progerss/progerssBar";
+import progerssBar from "@/components/panel/progerssBar";
+import mapTools from "@/components/panel/mapTools";
 import jsonData from "@/pages/json/button.json";
 import { mapState } from "vuex";
-import {getlonlat} from "@/api/index";
-import  "../../../static/leaflet/L.CanvasLayer";
+import { getlonlat } from "@/api/index";
+import "../../../static/leaflet/L.CanvasLayer";
 import canvase from "../../../static/leaflet/L.Grid";
 import { Message } from "element-ui";
 import NProgress from "nprogress";
 
 import { buttonData, buttonData2, getJsonFile } from "@/api/index";
 export default {
-  components: { crudPanel, proPanel, dateHoursOne, progerssBar },
+  components: { crudPanel, proPanel, dateHoursOne, progerssBar, mapTools },
   data() {
     return {
       //隐藏按钮数据
@@ -151,53 +153,63 @@ export default {
       .addTo(this.map);
 
     this.isCollapseL = true;
-    var colors=[[-3,0,0,235],[-2,82,82,255],[-1,143,143,255],[0,204,204,255],[1,255,133,133],
-      [2,255,102,102],[3,255,10,10]];
-    var latlon=null;
-    getlonlat().then(e=>{
-      console.log(e.data)
-      latlon=e.data;
-      var configdata={latlondata:latlon,isabs:false,mpstep:100};
+    var colors = [
+      [-3, 0, 0, 235],
+      [-2, 82, 82, 255],
+      [-1, 143, 143, 255],
+      [0, 204, 204, 255],
+      [1, 255, 133, 133],
+      [2, 255, 102, 102],
+      [3, 255, 10, 10]
+    ];
+    var latlon = null;
+    getlonlat().then(e => {
+      console.log(e.data);
+      latlon = e.data;
+      var configdata = { latlondata: latlon, isabs: false, mpstep: 100 };
       console.log(window);
-      canvase.canvase(configdata,colors,this.map,window,0.3);
+      canvase.canvase(configdata, colors, this.map, window, 0.3);
 
       //画等值线
       var prod = "msl";
       var data = latlon;
-      var n = data.ny, m = data.nx, values = new Array(n * m);
+      var n = data.ny,
+        m = data.nx,
+        values = new Array(n * m);
       for (var y = 0; y < n; y++) {
         for (var x = 0; x < m; x++) {
           values[y * m + x] = data.data[y][x];
         }
       }
 
-      var contours = d3.contours()
+      var contours = d3
+        .contours()
         .size([m, n])
         .thresholds([-20, -15, -10, 0, 5, 10, 15, 20, 25, 30])
-        .smooth(true)
-        (values);
+        .smooth(true)(values);
 
       for (var i = 0; i < contours.length; i++) {
         for (var j = 0; j < contours[i].coordinates.length; j++) {
           for (var k = 0; k < contours[i].coordinates[j].length; k++) {
             for (var m = 0; m < contours[i].coordinates[j][k].length; m++) {
-              contours[i].coordinates[j][k][m][0] = contours[i].coordinates[j][k][m][0] *0.25;
-              contours[i].coordinates[j][k][m][1] = 90-contours[i].coordinates[j][k][m][1]*0.25;
+              contours[i].coordinates[j][k][m][0] =
+                contours[i].coordinates[j][k][m][0] * 0.25;
+              contours[i].coordinates[j][k][m][1] =
+                90 - contours[i].coordinates[j][k][m][1] * 0.25;
             }
           }
         }
       }
       L.geoJSON(contours, {
-        style: function (feature) {
+        style: function(feature) {
           var v = feature.geometry.value;
           var c = "black";
 
-          return { "fill": false, stroke: true, weight: 0.8, color: c };
+          return { fill: false, stroke: true, weight: 0.8, color: c };
         },
         smoothFactor: 0.3
-
       }).addTo(this.map);
-    })
+    });
 
     this.isCollapseL = true;
 
@@ -302,13 +314,10 @@ export default {
   methods: {
     //async await
     initData() {
-      this.$store.commit("showLoading");
       //this._oPanelData = Object.assign({}, this.$store.getters.liveDatas);
       this._oPanelData = Object.assign({}, jsonData);
       //this.$set(this._oPanelData, "live", this.$store.getters.liveDatas);
-
       console.log("store原始数据", this._oPanelData);
-      this.$store.commit("hideLoading");
     },
     initProData() {
       for (var i in this._oPanelData) {
@@ -451,13 +460,26 @@ export default {
 */
 .progerss {
   position: absolute;
+  left: 22%;
   bottom: 5%;
-  left: 5%;
+  width: 54%;
   background-color: #000000;
   background-color: rgba(0, 0, 0, 0.2);
-  width: 90%;
-  z-index: 9999;
+  border-radius: 5px;
+  z-index: 715;
   padding: 10px;
+}
+
+/**
+工具条
+*/
+.tools {
+  position: absolute;
+  left: 22%;
+  top: 5%;
+  background-color: #fff;
+  border-radius: 5px;
+  z-index: 715;
 }
 
 /**

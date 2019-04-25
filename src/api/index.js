@@ -81,7 +81,8 @@ export const buttonData2 = data => {
 
 export const login = data => {
   //query = JSON.parse(JSON.stringify(query));
-  return ajax.post("/login", data);
+  
+  return ajax.post("/user/login", qs.stringify(data));
 };
 export const getUserList = data => {
   return ajax.get("/user/list", data);

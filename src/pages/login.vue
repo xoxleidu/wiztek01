@@ -55,34 +55,35 @@ export default {
           var postData = Object.assign({}, this.formData);
           postData.passWord = postData.passWord.MD5(16);
 
-          this.$router.replace("/");
+          //this.$router.replace("/");
 
-          // this.loading = true;
-          // login(postData)
-          //   .then(res => {
-          //     this.loading = false;
-          //     console.log("login ", res);
-          //     if (res.data.code == "0") {
-          //       this.$message.success("登陆成功！");
-          //       this.$store.commit(
-          //         "loginIn",
-          //         Object.assign(res.data.data, postData)
-          //       );
-          //       if (document.referrer) {
-          //         location.href = document.referrer;
-          //       } else {
-          //         this.$router.replace("/");
-          //         // location.reload();
-          //       }
-          //     } else {
-          //       this.$message.error(res.data.msg);
-          //     }
-          //   })
-          //   .catch(err => {
-          //     console.log("err " + err);
-          //     this.loading = false;
-          //     this.$message.error("接口错误");
-          //   });
+          this.loading = true;
+          login(postData)
+            .then(res => {
+              this.loading = false;
+              console.log("login ", res);
+              if (res.data.code == "000") {
+                this.$message.success("登陆成功！");
+                this.$store.commit(
+                  "loginIn",
+                  Object.assign(res.data.data, postData)
+                );
+                console.log(this.$store.token)
+                if (document.referrer) {
+                  location.href = document.referrer;
+                } else {
+                  this.$router.replace("/");
+                  // location.reload();
+                }
+              } else {
+                this.$message.error(res.data.msg);
+              }
+            })
+            .catch(err => {
+              console.log("err " + err);
+              this.loading = false;
+              this.$message.error("接口错误");
+            });
         }
       });
     }

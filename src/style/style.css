@@ -1,6 +1,16 @@
+/**
+leaflet map层 z-index: 1-400
+maptools,progerssbar层 z-index: 715
+el-dialog层 z-index: 2010
+*/
 a {
   color: #cbdeec;
   text-decoration: none;
+}
+hr {
+  background: #ddd;
+  border: none;
+  height: 1px;
 }
 .display_base {
   display: -webkit-box;

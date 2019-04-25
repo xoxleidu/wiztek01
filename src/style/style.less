@@ -1,3 +1,8 @@
+/**
+leaflet map层 z-index: 1-400
+maptools,progerssbar层 z-index: 715
+el-dialog层 z-index: 2010
+*/
 //背景色
 @baseBgColorWhite: #fff;
 @baseBgColorDark: #005590;
@@ -13,11 +18,12 @@
 @baseFontColorBlack: #555;
 @baseFontColorMin: #f3f9fe;
 @baseFontColorHeader: @baseFontColorMin;
-@baseFontColorChecked: #1BD1DC;
+@baseFontColorChecked: #1bd1dc;
 
 //字体大小
 @baseFontSize: 12px;
 @baseFontSize2: 14px;
+@baseFontSize3: 16px;
 @baseFontSizeHeader: 18px;
 
 //组件宽度
@@ -27,6 +33,12 @@
 a {
   color: @baseFontColor;
   text-decoration: none;
+}
+
+hr {
+  background: #ddd;
+  border: none;
+  height: 1px;
 }
 
 .display_base {

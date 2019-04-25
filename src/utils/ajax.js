@@ -61,7 +61,7 @@ ajax.interceptors.response.use(
   function(error) {
     // 对响应错误做点什么
     Message({
-      message: "接口错误:"+error,
+      message: "接口错误:" + error,
       type: "error",
       duration: 5 * 1000
     });

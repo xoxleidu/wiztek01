@@ -97,7 +97,7 @@
   import crudPanel from "@/components/panel/crudPanel";
   import proPanel from "@/components/panel/proPanel";
   import dateHoursOne from "@/components/select/dateHoursOne";
-  import progerssBar from "@/components/progerss/progerssBar";
+  import progerssBar from "@/components/panel/progerssBar";
   import jsonData from "@/pages/json/button.json";
   import { mapState } from "vuex";
   import {getlonlat} from "@/api/index";

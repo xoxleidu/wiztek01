@@ -5,7 +5,6 @@
         <el-button type="primary" icon="el-icon-caret-right"></el-button>
       </div>
     </el-col>
-
     <el-col :span="23">
       <div class="slider" ref="slider">
         <div class="process" :style="{width}"></div>
