@@ -27,11 +27,20 @@
     </el-form>
   </div>
 </template>
-<style scoped lang="scss">
+<style scoped lang="less">
+@import url("../style/style");
 .login-form {
-  margin: 0 auto;
-  margin-top: 10%;
-  width: 25%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: @baseBgColorDark;
+  .el-form {
+    width: 25%;
+    margin: 10% auto;
+    background-color: @baseBgColorWhite;
+    padding:20px;
+    border-radius:10px;
+  }
 }
 </style>
 <script>
@@ -68,7 +77,7 @@ export default {
                   "loginIn",
                   Object.assign(res.data.data, postData)
                 );
-                console.log(this.$store.token)
+                console.log(this.$store.token);
                 if (document.referrer) {
                   location.href = document.referrer;
                 } else {
