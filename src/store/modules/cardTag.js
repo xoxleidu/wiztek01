@@ -34,10 +34,11 @@ const panelButton = {
           commit("PanelButtonState", res.data);
         })
         .catch(err => {
-          Message({
-            type: "error",
+          this.$message({
+            type:"error",
             message: "接口返回错误:" + err
           });
+
         });
     }
   },

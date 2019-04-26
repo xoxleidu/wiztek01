@@ -40,6 +40,25 @@ export default {
       vm.$message({ message: res.data.msg, type: "error" });
     }
   },
+  getTreesInList(data) {
+    let dictX = {};
+    let root = [];
+    let childrens = data.filter(item => {
+      item.children = [];
+      dictX[item.id] = item;
+      if (item.pid == 0) {
+        root.push(item);
+        return false;
+      } else {
+        return true;
+      }
+    });
+    childrens.map(item => {
+      dictX[item.pid].children.push(item);
+    });
+    //console.log(root);
+    return root;
+  },
   //返回比较两个数组不同的值
   getArrDifference(arr1, arr2) {
     return arr1.concat(arr2).filter(function(v, i, arr) {
@@ -99,7 +118,7 @@ export default {
         return this.browserStr().match(regOpera);
         break;
       default:
-        return "我的天呐~~~,您这是啥浏览器啊???该换个浏览器了!!!"
+        return "我的天呐~~~,您这是啥浏览器啊???该换个浏览器了!!!";
     }
   }
 };

@@ -21,55 +21,17 @@ export const getJsonFile = () => {
   return axios.get("static/button.json");
 };
 
+//获取城市列表
+export const getJsonCitySelect = () => {
+  return axios.get("/static/city.json");
+};
+//获取地图样式
+export const getJsonMapStyle = () => {
+  return axios.get("/static/mapStyle/mapStyle.json")
+}
 export const buttonData2 = data => {
   //query = JSON.parse(JSON.stringify(query));
-  var data = [
-    {
-      id: "dolore dolore",
-      label: "qui consectetur nisi",
-      pid: "esse cupidatat",
-      url: "tempor commodo aliqua",
-      children: {
-        id: "officia dolor quis id exercitation",
-        label: "in pariatur in veniam",
-        pid: "occaecat culpa in",
-        url: "et velit",
-        show: true
-      },
-      checked: false,
-      show: false
-    },
-    {
-      id: "proident",
-      label: "exercitation proident",
-      pid: "dolor adipisicing aliquip",
-      url: "sit fugiat magna Excepteur",
-      children: {
-        id: "fu",
-        label: "et ut sit enim",
-        pid: "consequat dolor laboris",
-        url: "aliqua esse occaecat nostrud",
-        show: false
-      },
-      checked: false,
-      show: false
-    },
-    {
-      id: "dolore esse",
-      label: "mag",
-      pid: "elit",
-      url: "et ad aliquip",
-      children: {
-        id: "ea do ad",
-        label: "in",
-        pid: "nisi qui ad",
-        url: "amet do minim",
-        show: false
-      },
-      checked: true,
-      show: false
-    }
-  ];
+
   //后台POST 用requestParams接收时用
   var ss = qs.stringify(data);
 
@@ -81,7 +43,7 @@ export const buttonData2 = data => {
 
 export const login = data => {
   //query = JSON.parse(JSON.stringify(query));
-  
+
   return ajax.post("/user/login", qs.stringify(data));
 };
 export const getUserList = data => {

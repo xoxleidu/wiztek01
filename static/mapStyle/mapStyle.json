@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "name": "灰色",
+    "url": "/static/mapStyle/01.jpg"
+  },
+  {
+    "id": "2",
+    "name": "彩色",
+    "url": "/static/mapStyle/02.jpg"
+  },
+  {
+    "id": "3",
+    "name": "红色",
+    "url": "/static/mapStyle/03.jpg"
+  },
+  {
+    "id": "4",
+    "name": "绿色",
+    "url": "/static/mapStyle/04.jpg"
+  }
+]
