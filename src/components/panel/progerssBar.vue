@@ -1,23 +1,19 @@
 <template>
-  <el-row type="flex">
-    <el-col :span="1">
-      <div class="buttonPlay">
-        <el-button type="primary" icon="el-icon-caret-right"></el-button>
-      </div>
-    </el-col>
-    <el-col :span="23">
-      <div class="slider" ref="slider">
-        <div class="process" :style="{width}"></div>
-        <div class="thunk" ref="trunk" :style="{left}">
-          <div class="block"></div>
-          <div class="tips">
-            <span>{{scale*24}}</span>
-            <!-- <i class="fas fa-caret-down"></i> -->
-          </div>
+  <div class="progerssBar_main">
+    <div class="buttonPlay">
+      <el-button type="primary" icon="el-icon-caret-right"></el-button>
+    </div>
+    <div class="slider" ref="slider">
+      <div class="process" :style="{width}"></div>
+      <div class="thunk" ref="trunk" :style="{left}">
+        <div class="block"></div>
+        <div class="tips">
+          <span>{{scale*24}}</span>
+          <!-- <i class="fas fa-caret-down"></i> -->
         </div>
       </div>
-    </el-col>
-  </el-row>
+    </div>
+  </div>
 </template>
 <script>
 /*
@@ -89,21 +85,25 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.el-row,
-.el-col {
-  padding: 0px;
-  margin: 0px;
+@import url("../../style/style");
+.progerssBar_main {
+  .display_base;
+  .flex_rowNoWarp;
+  .flex_center;
+  div {
+    flex:auto;
+  }
 }
 .buttonPlay {
-  margin-right: 10px;
+  margin:0px 10px;
   /deep/ button {
-    background: #fff;
+    background: #409eff;
     border: none;
     border-radius: 50%;
     margin: 3px;
     padding: 10px;
     i {
-      color: #409eff;
+      color: #fff;
       font-size: 22px;
       padding: 0px;
       margin: 0px;
@@ -122,9 +122,9 @@ export default {
 .slider {
   position: relative;
   margin: 20px;
-  width: 98%;
+  width: 100%;
   height: 10px;
-  background: #e4e7ed;
+  background: #b9ddff;
   border-radius: 5px;
   cursor: pointer;
 }

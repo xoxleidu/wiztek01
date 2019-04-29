@@ -463,8 +463,8 @@ export default {
   left: 22%;
   bottom: 5%;
   width: 54%;
-  background-color: #000000;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: #FFF;
+  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 5px;
   z-index: 715;
   padding: 10px;
