@@ -14,7 +14,7 @@ export const buttonData = data => {
 };
 
 export const getPanelButtonState = () => {
-  return ajax.get("/get");
+  return ajax.get("/wdwf/api/data/element");
 };
 
 export const getJsonFile = () => {
@@ -27,8 +27,8 @@ export const getJsonCitySelect = () => {
 };
 //获取地图样式
 export const getJsonMapStyle = () => {
-  return axios.get("/static/mapStyle/mapStyle.json")
-}
+  return axios.get("/static/mapStyle/mapStyle.json");
+};
 export const buttonData2 = data => {
   //query = JSON.parse(JSON.stringify(query));
 
@@ -47,7 +47,7 @@ export const login = data => {
   return ajax.post("/user/login", qs.stringify(data));
 };
 export const getUserList = data => {
-  return ajax.get("/user/list", data);
+  return ajax.get("/user/info", data);
 };
 export const searchGlobal = data => {
   console.log("API " + data);
@@ -58,5 +58,5 @@ export const searchAdd = data => {
   return ajax.post("/user/postTest", data);
 };
 export const getlonlat = () => {
-  return ajax.get("/web/api/test/t3");
+  return ajax.get("/wdwf/api/data/t3");
 };

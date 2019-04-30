@@ -1,5 +1,5 @@
-var BASE_URL = "http://10.0.0.109:8088/";
-var API_URL = "http://localhost:8070/";
+var BASE_URL = "http://10.0.0.109:8088";
+var API_URL = "http://localhost:8070";
 //var API_URL = "http://10.0.0.109:8088";
 var IMAGEL_URL = "https://jsonplaceholder.typicode.com/posts/";
 

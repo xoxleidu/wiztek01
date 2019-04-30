@@ -2,7 +2,11 @@
   <div class="maptools_div">
     <el-button-group>
       <el-button v-popover:toolsCity icon="el-icon-location" @click="selectCity?  true : false">城市</el-button>
-      <el-button v-popover:selectMapStyle icon="el-icon-picture" @click="selectMapStyle?  true : false">地图</el-button>
+      <el-button
+        v-popover:selectMapStyle
+        icon="el-icon-picture"
+        @click="selectMapStyle?  true : false"
+      >地图</el-button>
     </el-button-group>
     <el-popover ref="toolsCity" placement="bottom-start" width="270" v-model="selectCity">
       <div>

@@ -318,6 +318,7 @@ export default {
       this._oPanelData = Object.assign({}, jsonData);
       //this.$set(this._oPanelData, "live", this.$store.getters.liveDatas);
       console.log("store原始数据", this._oPanelData);
+      console.log("token",this.$store.state.user.token)
     },
     initProData() {
       for (var i in this._oPanelData) {
@@ -463,8 +464,8 @@ export default {
   left: 22%;
   bottom: 5%;
   width: 54%;
-  background-color: #FFF;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: #e9f4f8;
+  background-color: rgba(233, 244, 248, 0.6);
   border-radius: 5px;
   z-index: 715;
   padding: 10px;
@@ -480,6 +481,8 @@ export default {
   background-color: #fff;
   border-radius: 5px;
   z-index: 715;
+  box-shadow: 0px 2px 2px #999;
+  -moz-box-shadow: 0px 2px 2px #999;
 }
 
 /**

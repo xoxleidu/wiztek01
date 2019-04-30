@@ -38,13 +38,13 @@
     width: 25%;
     margin: 10% auto;
     background-color: @baseBgColorWhite;
-    padding:20px;
-    border-radius:10px;
+    padding: 20px;
+    border-radius: 10px;
   }
 }
 </style>
 <script>
-import { login } from "@/api/index";
+import { login, getUserList } from "@/api/index";
 import "@/utils/md5.js";
 export default {
   data() {
@@ -71,22 +71,25 @@ export default {
             .then(res => {
               this.loading = false;
               console.log("login ", res);
-              if (res.data.code == "000") {
-                this.$message.success("登陆成功！");
-                this.$store.commit(
-                  "loginIn",
-                  Object.assign(res.data.data, postData)
-                );
-                console.log(this.$store.token);
-                if (document.referrer) {
-                  location.href = document.referrer;
-                } else {
-                  this.$router.replace("/");
-                  // location.reload();
-                }
-              } else {
-                this.$message.error(res.data.msg);
-              }
+              getUserList().then(e => {
+                console.log("getUserList ", e);
+              });
+              // if (res.data.code == "000") {
+              //   this.$message.success("登陆成功！");
+              //   this.$store.commit(
+              //     "loginIn",
+              //     Object.assign(res.data.data, postData)
+              //   );
+              //   console.log(this.$store.token);
+              //   if (document.referrer) {
+              //     location.href = document.referrer;
+              //   } else {
+              //     this.$router.replace("/");
+              //     // location.reload();
+              //   }
+              // } else {
+              //   this.$message.error(res.data.msg);
+              // }
             })
             .catch(err => {
               console.log("err " + err);

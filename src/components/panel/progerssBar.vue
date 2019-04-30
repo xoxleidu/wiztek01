@@ -91,20 +91,22 @@ export default {
   .flex_rowNoWarp;
   .flex_center;
   div {
-    flex:auto;
+    flex: auto;
   }
 }
 .buttonPlay {
-  margin:0px 10px;
+  margin: 0px 10px;
   /deep/ button {
-    background: #409eff;
+    background: #fff;
     border: none;
     border-radius: 50%;
     margin: 3px;
-    padding: 10px;
+    padding: 3px;
+    box-shadow: 0px 0px 15px #999;
+    -moz-box-shadow: 0px 0px 15px #999;
     i {
-      color: #fff;
-      font-size: 22px;
+      color: #005590;
+      font-size: 36px;
       padding: 0px;
       margin: 0px;
     }
@@ -124,8 +126,9 @@ export default {
   margin: 20px;
   width: 100%;
   height: 10px;
-  background: #b9ddff;
-  border-radius: 5px;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 3px;
   cursor: pointer;
 }
 .slider .process {
@@ -134,8 +137,8 @@ export default {
   top: 0;
   width: 112px;
   height: 10px;
-  border-radius: 5px;
-  background: #409eff;
+  border-radius: 3px;
+  background: #13d2da;
 }
 .slider .thunk {
   position: absolute;
@@ -148,8 +151,8 @@ export default {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 2px solid #409eff;
-  background: #409eff;
+  border: 2px solid #13d2da;
+  background: #13d2da;
   transition: 0.2s all;
 }
 .slider .tips {
@@ -161,7 +164,7 @@ export default {
   padding: 4px 8px;
   background-color: #000000;
   background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
+  border-radius: 3px;
   height: 12px;
   color: #fff;
 }
@@ -175,6 +178,6 @@ export default {
 }
 .slider .block:hover {
   transform: scale(1.1);
-  opacity: 0.6;
+  //opacity: 0.6;
 }
 </style>
